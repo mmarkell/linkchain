@@ -1,5 +1,5 @@
 import { GetServerSideProps } from 'next';
-import { prisma } from './db';
+import { prisma } from '../db';
 
 type Props = {
   addresses: string[];
