@@ -9,7 +9,7 @@ const Account = (props: Props) => {
   const { addresses } = props;
   return (
     <>
-      <p>Addresses for user</p>
+      <p>Addresses for user:</p>
       {addresses.map((address) => (
         <p key={address}>{address}</p>
       ))}
