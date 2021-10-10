@@ -58,7 +58,7 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
     console.log(tokens);
     return {
       props: {
-        nftUrls: tokens.result.filter((r) => r).map((r) => r.imageUrl),
+        nftUrls: tokens.result.filter((r) => r.imageUrl).map((r) => r.imageUrl),
         socialUrls: user.socialUrls,
       }, // will be passed to the page component as props
     };
