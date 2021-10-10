@@ -1,16 +1,16 @@
-datasource db {
-  url      = env("DATABASE_URL")
-  provider = "postgresql"
-}
-
 generator client {
   provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
 }
 
 model User {
   id        Int      @id @default(autoincrement())
   createdAt DateTime @default(now())
-  email     String?  @unique
+  address     String?  @unique
   alias     String   @unique
-  addresses String[]
+  socialUrls String[]
 }

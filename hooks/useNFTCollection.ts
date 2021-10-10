@@ -1,32 +1,19 @@
-import type { Web3Provider } from '@ethersproject/providers';
-import { useWeb3React } from '@web3-react/core';
 import { useEffect, useState } from 'react';
+import { getTokensByAddress } from '../pages/api/getTokensByAddress';
 
 export default function useNFTCollection(address: string) {
-  const { library, chainId } = useWeb3React<Web3Provider>();
   const [collection, setCollection] = useState<string[]>([]);
 
   useEffect(() => {
-    if (library && typeof address === 'string') {
-      let stale = false;
-
-      library
-        .lookupAddress(address)
-        .then((name) => {
-          if (!stale && typeof name === 'string') {
-            setCollection([name]);
-          } else {
-            setCollection(['abc', '123']);
-          }
-        })
-        .catch(() => {});
-
-      return () => {
-        stale = true;
-        setCollection([]);
-      };
-    }
-  }, [library, address, chainId]);
+    getTokensByAddress(address).then((tokens) => {
+      setCollection(
+        tokens.result?.filter((r) => r.imageUrl)?.map((r) => r.imageUrl),
+      );
+    });
+    return () => {
+      setCollection([]);
+    };
+  }, [address]);
 
   return collection;
 }
