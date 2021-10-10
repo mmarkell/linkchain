@@ -1,30 +1,13 @@
 import { prisma as db } from './db';
 
 async function main() {
-  const alice = await db.user.create({
+  await db.user.create({
     data: {
-      email: 'alice@prisma.io',
       alias: 'abcdefg',
-      addresses: [
-        '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB/7804',
-        '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB/5522',
-        '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB/7523',
-      ],
+      socialUrls: ['https://twitter.com/QuantumNFT'],
+      address: '0x1c10eD2ffe6b4228005EbAe5Aa1a9c790D275A52',
     },
   });
-
-  const bob = await db.user.create({
-    data: {
-      email: 'bob@prisma.io',
-      alias: '1234567',
-      addresses: [
-        '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB/123',
-        '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB/234',
-        '0xb47e3cd837dDF8e4c57F05d70Ab865de6e193BBB/456',
-      ],
-    },
-  });
-  console.log({ alice, bob });
 }
 
 main()
