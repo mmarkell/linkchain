@@ -15,74 +15,11 @@ type Props = {
 };
 
 const Account = ({ triedToEagerConnect }: Props) => {
-  const { active, error, activate, chainId, account, setError } =
-    useWeb3React();
-
-  const router = useRouter();
-
-  // initialize metamask onboarding
-  const onboarding = useRef<MetaMaskOnboarding>();
-  const { user } = useAuth();
-
-  useEffect(() => {
-    onboarding.current = new MetaMaskOnboarding();
-  }, []);
-
-  useEffect(() => {
-    if (active || error) {
-      onboarding.current?.stopOnboarding();
-    }
-  }, [active, error]);
+  const { chainId, account } = useWeb3React();
 
   const ENSName = useENSName(account);
 
-  const handleClick = useCallback(() => {
-    const hasMetaMaskOrWeb3Available =
-      MetaMaskOnboarding.isMetaMaskInstalled() ||
-      (window as any)?.ethereum ||
-      (window as any)?.web3;
-    if (hasMetaMaskOrWeb3Available) {
-      activate(injected, undefined, true).catch((error) => {
-        // ignore the error if it's a user rejected request
-        if (error instanceof UserRejectedRequestError) {
-        } else {
-          setError(error);
-        }
-      });
-    } else {
-      onboarding.current?.startOnboarding();
-    }
-  }, [activate, setError]);
-
-  if (error) {
-    return null;
-  }
-
-  if (!triedToEagerConnect) {
-    return null;
-  }
-
-  if (typeof account !== 'string') {
-    return (
-      <div>
-        <button
-          style={{
-            background: '#01030d',
-            border: 'none',
-            fontFamily: 'Space Grotesk',
-            fontSize: '1.4rem',
-            color: '#fff',
-            padding: '6px 20px',
-            transition: 'all .3s ease-in-out',
-            cursor: 'pointer',
-          }}
-          onClick={handleClick}
-        >
-          Connect Wallet
-        </button>
-      </div>
-    );
-  }
+  if (typeof account !== 'string') return null;
 
   return (
     <div
@@ -110,14 +47,14 @@ const Account = ({ triedToEagerConnect }: Props) => {
       >
         {ENSName || `${shortenHex(account, 4)}`}
       </a>
-      <div
+      {/* <div
         style={{
           marginRight: 20,
           marginTop: 10,
           cursor: 'pointer',
         }}
-      >
-        {user?.alias && (
+      > */}
+      {/* {user?.alias && (
           <Link href={`/${user?.alias}`} passHref>
             <ForwardedImage
               src="/profile_icon.png"
@@ -126,8 +63,8 @@ const Account = ({ triedToEagerConnect }: Props) => {
               height={20}
             />
           </Link>
-        )}
-      </div>
+        )} */}
+      {/* </div> */}
     </div>
   );
 };

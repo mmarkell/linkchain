@@ -1,6 +1,4 @@
 import Image from 'next/image';
-import { useCallback } from 'react';
-import useAuth from '../hooks/useAuth';
 import { TokenTransaction } from '../pages/api/getTokensByAddress';
 
 type Props = {
@@ -21,19 +19,14 @@ const NFTCollection = (props: Props) => {
         imageUrl: nft.imageUrl,
       }),
       method: 'POST',
-    })
-      .then((r) => r.json())
-      .then((data) => {
-        console.log(data);
-        onSaveProfile();
-      });
+    }).then(onSaveProfile);
   };
 
   return (
     <div
       style={{
-        display: 'flex',
-        justifyContent: 'center',
+        overflowY: 'auto',
+        backgroundColor: '#231942',
       }}
     >
       {isOnboarding && nfts?.length > 0 ? (

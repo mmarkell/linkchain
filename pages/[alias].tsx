@@ -17,7 +17,14 @@ const UserPage = (props: Props) => {
   const { nfts, socialUrls, alias } = props;
 
   return (
-    <>
+    <div
+      style={{
+        backgroundColor: '#231942',
+        width: '100%',
+        height: '100%',
+        position: 'absolute',
+      }}
+    >
       <Head>
         <title>LinkChain</title>
         <link rel="icon" href="/favicon.ico" />
@@ -28,21 +35,42 @@ const UserPage = (props: Props) => {
         </nav>
       </header>
       <div>
-        <p>Social URLs</p>
+        <p
+          style={{
+            color: '#DFCC74',
+            textShadow: '0 0 10px #FFF01F',
+          }}
+        >
+          Social URLs
+        </p>
         {socialUrls.map((item, i) => (
-          <Link
-            href={
-              item.startsWith('www') || item.startsWith('http')
-                ? item
-                : `https://${item}`
-            }
+          <div
+            style={{
+              color: '#DFCC74',
+              textShadow: '0 0 10px #FFF01F',
+            }}
             key={`${item}-${i}`}
           >
-            {item}
-          </Link>
+            <Link
+              href={
+                item.startsWith('www') || item.startsWith('http')
+                  ? item
+                  : `https://${item}`
+              }
+            >
+              {item}
+            </Link>
+          </div>
         ))}
       </div>
-      <h2>NFT Collection</h2>
+      <h2
+        style={{
+          color: '#DFCC74',
+          textShadow: '0 0 10px #FFF01F',
+        }}
+      >
+        NFT Collection
+      </h2>
       <NFTCollection nfts={nfts} />
       <style jsx>{`
         nav {
@@ -55,10 +83,10 @@ const UserPage = (props: Props) => {
           transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
           transition: opacity 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s,
             transform 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s;
-          background-color: grey;
+          background-color: #231942;
         }
       `}</style>
-    </>
+    </div>
   );
 };
 

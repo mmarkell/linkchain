@@ -6,10 +6,12 @@ const Logo = () => {
     <Link href="/">
       <a
         style={{
-          fontSize: '3rem',
+          fontSize: '2.5rem',
           fontWeight: 700,
-          color: '#fff',
+          color: '#DFCC74',
           marginLeft: 20,
+          marginTop: 10,
+          textShadow: '0 0 10px #FFF01F',
         }}
       >
         LinkChain

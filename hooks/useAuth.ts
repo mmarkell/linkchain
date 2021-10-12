@@ -17,12 +17,12 @@ export default function useAuth(): Response {
     fetch(`api/getAccount?address=${account}`)
       .then((r) => r.json())
       .then(({ user }: { user: User }) => {
-        setLoaded(true);
         setUser(user);
+        setLoaded(true);
       });
     return () => {
       setUser(null);
     };
-  }, [account]);
+  }, [account, setLoaded, setUser]);
   return { user, loaded };
 }
