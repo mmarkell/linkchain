@@ -1,19 +1,25 @@
 import { useEffect, useState } from 'react';
-import { getTokensByAddress } from '../pages/api/getTokensByAddress';
+import { TokenTransaction } from '../pages/api/getTokensByAddress';
 
 export default function useNFTCollection(address: string) {
-  const [collection, setCollection] = useState<string[]>([]);
+  const [collection, setCollection] = useState<TokenTransaction[]>([]);
+  const [collectionLoaded, setCollectionLoaded] = useState(false);
 
   useEffect(() => {
-    getTokensByAddress(address).then((tokens) => {
-      setCollection(
-        tokens.result?.filter((r) => r.imageUrl)?.map((r) => r.imageUrl),
-      );
-    });
+    if (!address) {
+      setCollection([]);
+    } else {
+      fetch(`/api/getTokensByAddress?address=${address}`)
+        .then((r) => r.json())
+        .then(({ result }: { result: TokenTransaction[] }) => {
+          setCollection(result);
+          setCollectionLoaded(true);
+        });
+    }
     return () => {
       setCollection([]);
     };
   }, [address]);
 
-  return collection;
+  return { collection, collectionLoaded };
 }

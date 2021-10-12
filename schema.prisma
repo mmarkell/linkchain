@@ -12,5 +12,6 @@ model User {
   createdAt DateTime @default(now())
   address     String?  @unique
   alias     String   @unique
+  profileImageUrl String?
   socialUrls String[]
 }

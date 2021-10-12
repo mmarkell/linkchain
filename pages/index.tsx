@@ -1,18 +1,12 @@
-import { useWeb3React } from '@web3-react/core';
 import Head from 'next/head';
 import React from 'react';
 import Account from '../components/Account';
 import Logo from '../components/Logo';
-import NFTCollection from '../components/NFTCollection';
 import OnboardingFlow from '../components/OnboardingFlow';
 import useEagerConnect from '../hooks/useEagerConnect';
 
 function Home() {
-  const { account, library } = useWeb3React();
-
   const triedToEagerConnect = useEagerConnect();
-
-  const isConnected = typeof account === 'string' && !!library;
 
   return (
     <div>

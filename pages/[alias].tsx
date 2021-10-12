@@ -1,48 +1,73 @@
-import { GetServerSideProps } from 'next';
-import { prisma } from '../db';
+import { GetStaticPaths, GetStaticProps } from 'next';
+import Head from 'next/head';
 import Image from 'next/image';
 import Link from 'next/link';
-import { getTokensByAddress } from './api/getTokensByAddress';
+import React from 'react';
+import Logo from '../components/Logo';
+import NFTCollection from '../components/NFTCollection';
+import { prisma } from '../db';
+import { getTokensByAddress, TokenTransaction } from './api/getTokensByAddress';
 type Props = {
-  nftUrls: string[];
+  nfts: TokenTransaction[];
   socialUrls: string[];
+  alias: string;
 };
 
-const Account = (props: Props) => {
-  const { nftUrls, socialUrls } = props;
+const UserPage = (props: Props) => {
+  const { nfts, socialUrls, alias } = props;
+
   return (
     <>
-      <div>
-        <p>User NFTs</p>
-        {nftUrls.map((item, i) => (
-          <div key={`${item}-${i}`}>
-            <Image alt={item} src={item} width={100} height={100} />
-          </div>
-        ))}
-      </div>
+      <Head>
+        <title>LinkChain</title>
+        <link rel="icon" href="/favicon.ico" />
+      </Head>
+      <header>
+        <nav>
+          <Logo />
+        </nav>
+      </header>
       <div>
         <p>Social URLs</p>
         {socialUrls.map((item, i) => (
-          <Link href={item} key={`${item}-${i}`}>
+          <Link
+            href={
+              item.startsWith('www') || item.startsWith('http')
+                ? item
+                : `https://${item}`
+            }
+            key={`${item}-${i}`}
+          >
             {item}
           </Link>
         ))}
       </div>
+      <h2>NFT Collection</h2>
+      <NFTCollection nfts={nfts} />
+      <style jsx>{`
+        nav {
+          display: flex;
+          flex-direction: row;
+          justify-content: space-between;
+          align-items: center;
+          visibility: visible;
+          opacity: 1;
+          transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+          transition: opacity 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s,
+            transform 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s;
+          background-color: grey;
+        }
+      `}</style>
     </>
   );
 };
 
-export const getServerSideProps: GetServerSideProps<Props> = async (
-  context,
-) => {
+export const getStaticProps: GetStaticProps<Props> = async (context) => {
   const { params } = context;
   const alias = params.alias;
   if (typeof alias !== 'string') {
     return {
-      props: {
-        nftUrls: [],
-        socialUrls: [],
-      },
+      notFound: true,
     };
   }
 
@@ -54,23 +79,34 @@ export const getServerSideProps: GetServerSideProps<Props> = async (
       rejectOnNotFound: true,
     });
 
-    const tokens = await getTokensByAddress(user.address);
-    console.log(tokens);
+    const { result } = await getTokensByAddress(user.address);
     return {
+      revalidate: 120,
       props: {
-        nftUrls: tokens.result.filter((r) => r.imageUrl).map((r) => r.imageUrl),
+        nfts: result,
         socialUrls: user.socialUrls,
+        alias,
       }, // will be passed to the page component as props
     };
   } catch (e) {
-    console.log(e);
+    console.error(e);
     return {
-      props: {
-        nftUrls: [],
-        socialUrls: [],
-      },
+      notFound: true,
     };
   }
 };
 
-export default Account;
+export const getStaticPaths: GetStaticPaths = async () => {
+  const users = await prisma.user.findMany();
+  const paths = users.map((user) => {
+    return {
+      params: { alias: user.alias },
+    };
+  });
+  return {
+    paths,
+    fallback: 'blocking',
+  };
+};
+
+export default UserPage;

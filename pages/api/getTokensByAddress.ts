@@ -10,7 +10,7 @@ type EtherscanResponseItem = {
 };
 
 type EtherscanResponse = { result: EtherscanResponseItem[] };
-type TokenTransaction = {
+export type TokenTransaction = {
   imageUrl: string;
   tokenName: string;
 };
@@ -51,7 +51,17 @@ const getERC721byOwner = async (address: string) => {
       },
     )
   ).json()) as EtherscanResponse;
-  return erc721;
+  if (!erc721.result || !erc721.result.map) {
+    return {
+      result: [],
+    };
+  }
+  return {
+    result: erc721.result?.map((r) => ({
+      ...r,
+      tokenName: `${r.tokenName} #${r.tokenID}`, // add the ID to the end of the token name
+    })),
+  };
 };
 
 export const getERC20byOwner = async (address: string) => {
@@ -74,7 +84,17 @@ export const getERC20byOwner = async (address: string) => {
       },
     )
   ).json()) as EtherscanResponse;
-  return erc20;
+  if (!erc20?.result || !erc20.result?.map) {
+    return {
+      result: [],
+    };
+  }
+  return {
+    result: erc20.result?.map((r) => ({
+      ...r,
+      tokenName: `${r.tokenName} #${r.tokenID}`, // add the ID to the end of the token name
+    })),
+  };
 };
 
 export const getOpenSeaTokens = async (address: string) => {
@@ -93,13 +113,18 @@ export const getOpenSeaTokens = async (address: string) => {
     )
   ).json()) as OpenseaResponse;
 
-  return response.assets.map((asset) => ({
+  if (!response.assets) {
+    return [];
+  }
+  return response.assets?.map((asset) => ({
     tokenName: asset.name,
     imageUrl: asset.image_url,
   }));
 };
 
-export const getTokensByAddress = async (address: string) => {
+export const getTokensByAddress = async (
+  address: string,
+): Promise<ReturnType> => {
   const erc721 = await getERC721byOwner(address);
   const erc20 = await getERC20byOwner(address);
   const data = [...erc721.result, ...erc20.result];
@@ -117,7 +142,23 @@ export const getTokensByAddress = async (address: string) => {
     }),
   );
   const openseaTokens = await getOpenSeaTokens(address);
-  return { result: [...etherscanImages, ...openseaTokens] };
+  const result = [...etherscanImages, ...openseaTokens];
+  /**
+   * Remove duplicates and undefined values from the array
+   */
+  const final: TokenTransaction[] = [];
+  const seen = {};
+  for (const key in result) {
+    const item = result[key];
+    if (!item.imageUrl) continue;
+    if (seen[item.imageUrl]) {
+      continue;
+    } else {
+      seen[item.imageUrl] = true;
+      final.push(item);
+    }
+  }
+  return { result: final };
 };
 
 export default async function handler(
@@ -128,6 +169,12 @@ export default async function handler(
   const address = query.address;
   if (typeof address === 'string') {
     const result = await getTokensByAddress(address);
+    res.setHeader(
+      'Cache-Control',
+      'public, s-maxage=10, stale-while-revalidate=59',
+    );
+    res.setHeader('X-Cache', 'HIT');
+
     res.status(200).json(result);
   } else {
     res.status(200).send({ result: [] });
