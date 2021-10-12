@@ -21,7 +21,7 @@ export const OnboardingElements = (props: PropsType) => {
   const onComplete = useCallback(
     (item: number) => {
       return () => {
-        if (item === numChildren - 1) {
+        if (item === numChildren - 1 && user?.alias) {
           router.push(`/${user?.alias}`);
         }
         setProgressIndex(item + 1);
