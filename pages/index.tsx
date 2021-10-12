@@ -16,10 +16,11 @@ function Home() {
     loaded && !Boolean(user?.socialUrls) && !Boolean(user?.profileImageUrl);
 
   useEffect(() => {
-    if (!needsOnboarding) {
+    if (!needsOnboarding && user?.alias) {
       router.push(`/${user?.alias}`);
     }
   }, [needsOnboarding, router, user]);
+
   return (
     <div>
       <Head>
