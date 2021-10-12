@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+import { prisma } from '../../db';
 
 type ReturnType = {
   success: boolean;
