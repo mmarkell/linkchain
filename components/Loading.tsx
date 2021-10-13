@@ -4,16 +4,15 @@ import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
 import DotLoader from 'react-spinners/DotLoader';
 import useAuth from '../hooks/useAuth';
+import useEagerConnect from '../hooks/useEagerConnect';
 
 export const Loading = () => {
   const router = useRouter();
 
+  const triedToEagerConnect = useEagerConnect();
   const [loading, setLoading] = useState(false);
 
-  const { loaded } = useAuth();
-  const { active } = useWeb3React<Web3Provider>();
-
-  const unsure = !active || !loaded;
+  const unsure = triedToEagerConnect === false;
 
   useEffect(() => {
     if (unsure) {

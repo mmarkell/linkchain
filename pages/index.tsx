@@ -1,12 +1,11 @@
 import { Web3Provider } from '@ethersproject/providers';
+import MetaMaskOnboarding from '@metamask/onboarding';
 import { useWeb3React } from '@web3-react/core';
 import Head from 'next/head';
-import router, { useRouter } from 'next/router';
-import React, { useCallback, useEffect } from 'react';
+import { useRouter } from 'next/router';
+import React, { useCallback } from 'react';
 import Account from '../components/Account';
-import { Loading } from '../components/Loading';
 import Logo from '../components/Logo';
-import OnboardingFlow from '../components/OnboardingFlow';
 import useAuth from '../hooks/useAuth';
 import useEagerConnect from '../hooks/useEagerConnect';
 
@@ -16,7 +15,7 @@ function Home() {
   const { active, account } = useWeb3React<Web3Provider>();
   const router = useRouter();
 
-  const unsure = !active || !loaded;
+  const unsure = triedToEagerConnect === false;
 
   const needsOnboarding =
     !user || !user.profileImageUrl || !(user.socialUrls?.length > 0);
