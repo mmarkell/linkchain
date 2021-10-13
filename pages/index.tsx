@@ -22,12 +22,13 @@ function Home() {
     !user || !user.profileImageUrl || !(user.socialUrls?.length > 0);
 
   const handleClick = useCallback(() => {
+    if (unsure) return;
     if (needsOnboarding) {
       router.push('/signup');
     } else {
       router.push(`/${user?.alias}`);
     }
-  }, [needsOnboarding, router, user?.alias]);
+  }, [needsOnboarding, router, unsure, user?.alias]);
 
   return (
     <div>
