@@ -12,9 +12,11 @@ import useEagerConnect from '../hooks/useEagerConnect';
 
 function Home() {
   const triedToEagerConnect = useEagerConnect();
-  const { user } = useAuth();
-  const { active } = useWeb3React<Web3Provider>();
+  const { user, loaded } = useAuth();
+  const { active, account } = useWeb3React<Web3Provider>();
   const router = useRouter();
+
+  const unsure = !active || !loaded;
 
   const needsOnboarding =
     !user || !user.profileImageUrl || !(user.socialUrls?.length > 0);
@@ -70,7 +72,11 @@ function Home() {
             }}
             onClick={handleClick}
           >
-            {needsOnboarding ? 'sign up' : 'edit your profile'}
+            {unsure
+              ? 'loading'
+              : needsOnboarding
+              ? 'sign up'
+              : 'edit your profile'}
           </div>
         </div>
       </main>
