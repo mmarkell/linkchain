@@ -4,7 +4,11 @@ import { Loading } from './Loading';
 
 const Logo = () => {
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+      }}
+    >
       <Link href="/">
         <a
           style={{
@@ -13,6 +17,7 @@ const Logo = () => {
             color: '#DFCC74',
             marginLeft: 20,
             marginTop: 10,
+            marginRight: 20,
             textShadow: '0 0 10px #FFF01F',
           }}
         >

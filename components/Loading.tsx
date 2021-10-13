@@ -1,11 +1,27 @@
+import { Web3Provider } from '@ethersproject/providers';
+import { useWeb3React } from '@web3-react/core';
 import { useRouter } from 'next/router';
 import { useEffect, useState } from 'react';
-import PacmanLoader from 'react-spinners/PacmanLoader';
+import DotLoader from 'react-spinners/DotLoader';
+import useAuth from '../hooks/useAuth';
 
 export const Loading = () => {
   const router = useRouter();
 
   const [loading, setLoading] = useState(false);
+
+  const { loaded } = useAuth();
+  const { active } = useWeb3React<Web3Provider>();
+
+  const unsure = !active || !loaded;
+
+  useEffect(() => {
+    if (unsure) {
+      setLoading(true);
+    } else {
+      setLoading(false);
+    }
+  }, [unsure, setLoading]);
 
   useEffect(() => {
     const handleStart = (url: string) => {
@@ -26,17 +42,5 @@ export const Loading = () => {
     };
   });
 
-  return (
-    loading && (
-      <div
-        style={{
-          position: 'absolute',
-          top: '1%',
-          left: '12.5%',
-        }}
-      >
-        <PacmanLoader color="#fff" />
-      </div>
-    )
-  );
+  return loading && <DotLoader color="#fff" />;
 };
