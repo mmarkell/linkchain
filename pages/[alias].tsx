@@ -1,12 +1,12 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-import Image from 'next/image';
 import Link from 'next/link';
 import React from 'react';
 import Logo from '../components/Logo';
 import NFTCollection from '../components/NFTCollection';
 import { prisma } from '../db';
 import { getTokensByAddress, TokenTransaction } from './api/getTokensByAddress';
+
 type Props = {
   nfts: TokenTransaction[];
   socialUrls: string[];

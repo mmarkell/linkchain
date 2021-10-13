@@ -10,6 +10,7 @@ export const ChooseProfilePicture = (props: OnboardingPropsType) => {
   const { collection } = useNFTCollection(account);
   const { onComplete } = props;
   const { user } = useAuth();
+
   useEffect(() => {
     if (Boolean(user?.profileImageUrl)) {
       onComplete();
