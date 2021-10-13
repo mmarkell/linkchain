@@ -97,31 +97,6 @@ export const getERC20byOwner = async (address: string) => {
   };
 };
 
-export const getOpenSeaTokens = async (address: string) => {
-  const response = (await (
-    await fetch(
-      'https://api.opensea.io/api/v1/assets?' +
-        new URLSearchParams({
-          order_direction: 'desc',
-          offset: '0',
-          limit: '20',
-          owner: address,
-        }),
-      {
-        method: 'GET',
-      },
-    )
-  ).json()) as OpenseaResponse;
-
-  if (!response.assets) {
-    return [];
-  }
-  return response.assets?.map((asset) => ({
-    tokenName: asset.name,
-    imageUrl: asset.image_url,
-  }));
-};
-
 export const getTokensByAddress = async (
   address: string,
 ): Promise<ReturnType> => {
@@ -141,15 +116,13 @@ export const getTokensByAddress = async (
       };
     }),
   );
-  const openseaTokens = await getOpenSeaTokens(address);
-  const result = [...etherscanImages, ...openseaTokens];
   /**
    * Remove duplicates and undefined values from the array
    */
   const final: TokenTransaction[] = [];
   const seen = {};
-  for (const key in result) {
-    const item = result[key];
+  for (const key in etherscanImages) {
+    const item = etherscanImages[key];
     if (!item.imageUrl) continue;
     if (seen[item.imageUrl]) {
       continue;

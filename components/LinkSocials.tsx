@@ -13,8 +13,8 @@ export const LinkSocials = (props: OnboardingPropsType) => {
   const { onComplete } = props;
 
   const [twitterHandle, setTwitterHandle] = useState('');
+  const [error, setError] = useState('');
 
-  const validatedTwitter = isTwitterLink(twitterHandle);
   const { user } = useAuth();
 
   useEffect(() => {
@@ -23,8 +23,12 @@ export const LinkSocials = (props: OnboardingPropsType) => {
     }
   }, [onComplete, user]);
 
-  const handleSubmitSocials = useCallback(() => {
+  const handleSubmit = useCallback(() => {
     if (!account) return;
+    if (!isTwitterLink(twitterHandle)) {
+      setError('Enter a valid twitter profile link');
+      return;
+    }
     fetch('api/saveSocials', {
       method: 'POST',
       body: JSON.stringify({
@@ -34,6 +38,22 @@ export const LinkSocials = (props: OnboardingPropsType) => {
     }).then(onComplete);
   }, [account, twitterHandle, onComplete]);
 
+  const handleKeydown = useCallback(
+    (e: KeyboardEvent) => {
+      if (e.key === 'Enter') {
+        handleSubmit();
+      }
+    },
+    [handleSubmit],
+  );
+
+  useEffect(() => {
+    window.addEventListener('keydown', handleKeydown);
+    return () => {
+      window.removeEventListener('keydown', handleKeydown);
+    };
+  }, [handleKeydown]);
+
   return (
     <div>
       <h1>Please link your socials</h1>
@@ -42,7 +62,6 @@ export const LinkSocials = (props: OnboardingPropsType) => {
         style={{
           width: '20%',
         }}
-        onSubmit={handleSubmitSocials}
         type="text"
         autoComplete="false"
         name="hidden"
@@ -51,7 +70,15 @@ export const LinkSocials = (props: OnboardingPropsType) => {
         value={twitterHandle}
         onChange={(evt) => setTwitterHandle(evt.target.value)}
       />
-      {validatedTwitter && <button onClick={handleSubmitSocials}>Save</button>}
+      {error && (
+        <div
+          style={{
+            color: 'red',
+          }}
+        >
+          {error}
+        </div>
+      )}
     </div>
   );
 };

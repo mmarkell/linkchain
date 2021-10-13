@@ -83,7 +83,7 @@ const UserPage = (props: Props) => {
           transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
           transition: opacity 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s,
             transform 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s;
-          background-color: #231942;
+          background-color: #617f8f;
         }
       `}</style>
     </div>

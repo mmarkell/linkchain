@@ -13,7 +13,7 @@ export const OnboardingElements = (props: PropsType) => {
   const { children } = props;
 
   const [progressIndex, setProgressIndex] = useState(0);
-  const { user } = useAuth();
+  const { user, reloadUser } = useAuth();
   const router = useRouter();
 
   const numChildren = React.Children.count(children);
@@ -21,13 +21,17 @@ export const OnboardingElements = (props: PropsType) => {
   const onComplete = useCallback(
     (item: number) => {
       return () => {
+        console.log(numChildren - 1, item, user?.alias);
         if (item === numChildren - 1 && user?.alias) {
-          router.push(`/${user?.alias}`);
+          console.log('proceeding');
+          router.push(`/${user?.alias}`, `/${user?.alias}`, { shallow: false });
+          router.reload();
         }
         setProgressIndex(item + 1);
+        reloadUser();
       };
     },
-    [numChildren, user, router],
+    [numChildren, user?.alias, reloadUser, router],
   );
 
   const childrenWithProps = useMemo(() => {

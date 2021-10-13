@@ -15,6 +15,7 @@ export const ChooseProfilePicture = (props: OnboardingPropsType) => {
       onComplete();
     }
   }, [onComplete, user]);
+
   return (
     <NFTCollection
       nfts={collection}

@@ -1,5 +1,7 @@
-import { useRouter } from 'next/router';
+import { Web3Provider } from '@ethersproject/providers';
+import { useWeb3React } from '@web3-react/core';
 import Head from 'next/head';
+import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import Account from '../components/Account';
 import Logo from '../components/Logo';
@@ -10,10 +12,11 @@ import useEagerConnect from '../hooks/useEagerConnect';
 function Home() {
   const triedToEagerConnect = useEagerConnect();
   const { user, loaded } = useAuth();
+  const { active } = useWeb3React<Web3Provider>();
   const router = useRouter();
 
   const needsOnboarding =
-    loaded && !Boolean(user?.socialUrls) && !Boolean(user?.profileImageUrl);
+    !active || !user || !user.profileImageUrl || !(user.socialUrls?.length > 0);
 
   useEffect(() => {
     if (!needsOnboarding && user?.alias) {
@@ -35,11 +38,7 @@ function Home() {
         </nav>
       </header>
 
-      <main>
-        {loaded &&
-          !Boolean(user?.socialUrls) &&
-          !Boolean(user?.profileImageUrl) && <OnboardingFlow />}
-      </main>
+      <main>{needsOnboarding && <OnboardingFlow />}</main>
 
       <style jsx>{`
         nav {

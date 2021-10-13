@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+const fetch = require('@vercel/fetch-retry')(require('node-fetch'));
 
 export type ReturnType = {
   imageUrl: string;
