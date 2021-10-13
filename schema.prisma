@@ -8,10 +8,10 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  createdAt DateTime @default(now())
-  address     String?  @unique
-  alias     String   @unique
+  id              Int      @id @default(autoincrement())
+  createdAt       DateTime @default(now())
+  address         String?  @unique
+  alias           String   @unique
   profileImageUrl String?
-  socialUrls String[]
+  socialUrls      String[]
 }
