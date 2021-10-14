@@ -16,20 +16,18 @@ export const OnboardingElements = (props: PropsType) => {
   const { user, reloadUser } = useAuth();
   const router = useRouter();
 
-  const numChildren = React.Children.count(children);
+  if (user?.links?.length > 0 && user?.alias) {
+    router.push(`/${user?.alias}`);
+  }
 
   const onComplete = useCallback(
     (item: number) => {
       return () => {
-        if (item === numChildren - 1 && user?.alias) {
-          router.push(`/${user?.alias}`, `/${user?.alias}`, { shallow: false });
-          router.reload();
-        }
         setProgressIndex(item + 1);
         reloadUser();
       };
     },
-    [numChildren, user, reloadUser, router],
+    [reloadUser],
   );
 
   const childrenWithProps = useMemo(() => {

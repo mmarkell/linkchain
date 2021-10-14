@@ -5,10 +5,10 @@ import React from 'react';
 import Logo from '../components/Logo';
 import NFTCollection from '../components/NFTCollection';
 import { prisma } from '../db';
-import { getTokensByAddress, TokenTransaction } from './api/getTokensByAddress';
+import { getTokensByAddress, ReturnItem } from './api/getTokensByAddress';
 
 type Props = {
-  nfts: TokenTransaction[];
+  nfts: ReturnItem[];
   socialUrls: string[];
   alias: string;
 };
@@ -104,6 +104,9 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
       where: {
         alias: alias,
       },
+      include: {
+        links: true,
+      },
       rejectOnNotFound: true,
     });
 
@@ -112,7 +115,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
       revalidate: 120,
       props: {
         nfts: result,
-        socialUrls: user.socialUrls,
+        socialUrls: user.links?.map((link) => link.url),
         alias,
       }, // will be passed to the page component as props
     };

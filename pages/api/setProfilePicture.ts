@@ -1,24 +1,36 @@
+import { Nft } from '.prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '../../db';
+import { getTokensByAddress } from './getTokensByAddress';
 
 type ReturnType = {
   success: boolean;
 };
 
-export const verifyOwnership = async (address: string, imageUrl: string) => {
-  // TODO: verify ownership
-  return true;
+export type SetProfilePictureCommand = {
+  userAddress: string;
+  nftArgs: Omit<Nft, 'id'>;
+};
+
+export const verifyOwnership = async (
+  userAddress: string,
+  nftAddress: string,
+) => {
+  const tokens = await getTokensByAddress(userAddress);
+  return tokens.result?.some((token) => token.address === nftAddress);
 };
 
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ReturnType>,
 ) {
-  const body = JSON.parse(req.body) as { address: string; imageUrl: string };
-  const { address, imageUrl } = body;
+  const body = JSON.parse(req.body) as SetProfilePictureCommand;
+
+  const { userAddress, nftArgs } = body;
+
   const existingUser = await prisma.user.findUnique({
     where: {
-      address: address,
+      address: userAddress,
     },
   });
 
@@ -28,24 +40,36 @@ export default async function handler(
     });
   }
 
-  const aliasOwnsToken = await verifyOwnership(address, imageUrl);
+  const aliasOwnsToken = await verifyOwnership(userAddress, nftArgs.address);
   if (!aliasOwnsToken) {
     return res.status(400).send({
       success: false,
     });
   }
 
-  const user = await prisma.user.update({
+  const nft = await prisma.nft.create({
+    data: {
+      address: nftArgs.address,
+      imageUrl: nftArgs.imageUrl,
+      type: nftArgs.type,
+      User: {
+        connect: {
+          id: existingUser.id,
+        },
+      },
+    },
+  });
+
+  await prisma.user.update({
     where: {
-      address: address,
+      address: userAddress,
     },
     data: {
-      ...existingUser,
-      profileImageUrl: imageUrl,
+      nftId: nft.id,
     },
   });
 
   res.status(200).send({
-    success: Boolean(user),
+    success: Boolean(nft),
   });
 }

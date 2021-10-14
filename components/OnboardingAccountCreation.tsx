@@ -1,6 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import { useCallback, useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
+import { useLoading } from '../hooks/useLoading';
 import { OnboardingPropsType } from './ConnectToMetamask';
 
 export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
@@ -10,6 +11,7 @@ export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
   const [error, setError] = useState('');
 
   const { user } = useAuth();
+  const [loading, setLoading] = useLoading();
 
   useEffect(() => {
     if (Boolean(user)) {
@@ -18,6 +20,7 @@ export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
   }, [onComplete, user]);
 
   const handleSubmit = useCallback(() => {
+    setLoading(true);
     fetch(`api/validateUsername?username=${username}`)
       .then((r) => r.json())
       .then(({ isUsernameValid }: { isUsernameValid: boolean }) => {
@@ -32,12 +35,16 @@ export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
               username: username,
               address: account,
             }),
-          }).then(() => {
-            onComplete();
-          });
+          })
+            .then(() => {
+              setLoading(false);
+            })
+            .then(() => {
+              onComplete();
+            });
         }
       });
-  }, [account, onComplete, username, setError]);
+  }, [setLoading, username, account, onComplete]);
 
   const handleKeydown = useCallback(
     (e: KeyboardEvent) => {

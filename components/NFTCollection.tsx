@@ -1,25 +1,38 @@
 import Image from 'next/image';
-import { TokenTransaction } from '../pages/api/getTokensByAddress';
+import { useLoading } from '../hooks/useLoading';
+import { ReturnItem } from '../pages/api/getTokensByAddress';
+import { SetProfilePictureCommand } from '../pages/api/setProfilePicture';
 
 type Props = {
-  nfts: TokenTransaction[];
+  nfts: ReturnItem[];
   alias?: string;
   isOnboarding?: boolean;
   address?: string;
+  userId?: number;
   onSaveProfile?: () => void;
 };
 
 const NFTCollection = (props: Props) => {
-  const { nfts, alias, isOnboarding, address, onSaveProfile } = props;
+  const { nfts, alias, isOnboarding, address, onSaveProfile, userId } = props;
 
-  const handleMakeProfile = (nft: TokenTransaction) => {
+  const [loading, setLoading] = useLoading();
+
+  const handleMakeProfile = (nft: ReturnItem) => {
+    if (!userId || !address) return;
+
+    const body: SetProfilePictureCommand = {
+      userAddress: address,
+      nftArgs: {
+        ...nft,
+      },
+    };
+    setLoading(true);
     fetch('/api/setProfilePicture', {
-      body: JSON.stringify({
-        address,
-        imageUrl: nft.imageUrl,
-      }),
+      body: JSON.stringify(body),
       method: 'POST',
-    }).then(onSaveProfile);
+    })
+      .then(() => setLoading(false))
+      .then(onSaveProfile);
   };
 
   return (

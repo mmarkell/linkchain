@@ -25,7 +25,6 @@ export default async function handler(
 
   const user = await prisma.user.create({
     data: {
-      socialUrls: [],
       alias: username,
       address,
     },

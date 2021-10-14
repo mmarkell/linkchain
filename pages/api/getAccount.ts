@@ -22,6 +22,10 @@ export default async function handler(
     where: {
       address: address,
     },
+    include: {
+      profileNFT: true,
+      links: true,
+    },
   });
 
   return res.status(200).send({

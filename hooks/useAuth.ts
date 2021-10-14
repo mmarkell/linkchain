@@ -1,7 +1,16 @@
 import type { Web3Provider } from '@ethersproject/providers';
-import { User } from '@prisma/client';
+import { Prisma } from '@prisma/client';
 import { useWeb3React } from '@web3-react/core';
 import { useCallback, useEffect, useState } from 'react';
+
+const userWithRelations = Prisma.validator<Prisma.UserArgs>()({
+  include: {
+    links: true,
+    profileNFT: true,
+  },
+});
+
+type User = Prisma.UserGetPayload<typeof userWithRelations>;
 
 type Response = {
   user: User;

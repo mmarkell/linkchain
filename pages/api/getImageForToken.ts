@@ -1,4 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
+
 const fetch = require('@vercel/fetch-retry')(require('node-fetch'));
 
 export type ReturnType = {
@@ -14,13 +15,20 @@ type OpenseaResponse = {
 };
 
 export async function getImageForToken(address: string, tokenId: string) {
+  return Promise.race([coreGetImage(address, tokenId), awaitTimeout(500)]);
+}
+
+const awaitTimeout = (delay) =>
+  new Promise<void>((resolve, reject) => setTimeout(() => reject(), delay));
+
+export async function coreGetImage(address: string, tokenId: string) {
   const options = { method: 'GET' };
+  const queryString = tokenId
+    ? `https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20&asset_contract_address=${address}&token_ids=${tokenId}`
+    : `https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20&asset_contract_address=${address}`;
 
   const data = (await (
-    await fetch(
-      `https://api.opensea.io/api/v1/assets?order_direction=desc&offset=0&limit=20&asset_contract_address=${address}&token_ids=${tokenId}`,
-      options,
-    )
+    await fetch(queryString, options)
   ).json()) as OpenseaResponse;
 
   const imageUrl = data.assets?.[0]?.image_url;

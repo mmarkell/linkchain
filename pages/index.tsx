@@ -14,7 +14,7 @@ function Home() {
   const unsure = triedToEagerConnect === false;
 
   const needsOnboarding =
-    !user || !user.profileImageUrl || !(user.socialUrls?.length > 0);
+    !user || !user.profileNFT || !(user.links?.length > 0);
 
   const handleClick = useCallback(() => {
     if (unsure) return;
@@ -68,11 +68,7 @@ function Home() {
             }}
             onClick={handleClick}
           >
-            {unsure
-              ? 'loading'
-              : needsOnboarding
-              ? 'sign up'
-              : 'edit your profile'}
+            {unsure ? '' : needsOnboarding ? 'sign up' : 'edit your profile'}
           </div>
         </div>
       </main>

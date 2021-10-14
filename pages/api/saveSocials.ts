@@ -26,16 +26,19 @@ export default async function handler(
     });
   }
 
-  const user = await prisma.user.update({
-    where: {
-      address: address,
-    },
+  const link = await prisma.link.create({
     data: {
-      socialUrls: [twitterHandle],
+      User: {
+        connect: {
+          id: existingUser.id,
+        },
+      },
+      type: 'TWITTER',
+      url: twitterHandle,
     },
   });
 
   res.status(200).send({
-    success: Boolean(user),
+    success: Boolean(link),
   });
 }

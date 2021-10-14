@@ -1,6 +1,7 @@
 import { useWeb3React } from '@web3-react/core';
 import { useCallback, useEffect, useState } from 'react';
 import useAuth from '../hooks/useAuth';
+import { useLoading } from '../hooks/useLoading';
 import { OnboardingPropsType } from './ConnectToMetamask';
 
 const isTwitterLink = (link: string) =>
@@ -16,9 +17,10 @@ export const LinkSocials = (props: OnboardingPropsType) => {
   const [error, setError] = useState('');
 
   const { user } = useAuth();
+  const [loading, setLoading] = useLoading();
 
   useEffect(() => {
-    if (Boolean(user?.socialUrls?.length > 0)) {
+    if (Boolean(user?.links?.length > 0)) {
       onComplete();
     }
   }, [onComplete, user]);
@@ -29,14 +31,19 @@ export const LinkSocials = (props: OnboardingPropsType) => {
       setError('Enter a valid twitter profile link');
       return;
     }
+
+    setLoading(true);
+
     fetch('api/saveSocials', {
       method: 'POST',
       body: JSON.stringify({
         twitterHandle: twitterHandle,
         address: account,
       }),
-    }).then(onComplete);
-  }, [account, twitterHandle, onComplete]);
+    })
+      .then(() => setLoading(false))
+      .then(onComplete);
+  }, [account, twitterHandle, setLoading, onComplete]);
 
   const handleKeydown = useCallback(
     (e: KeyboardEvent) => {

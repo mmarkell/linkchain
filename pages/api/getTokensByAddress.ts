@@ -1,37 +1,38 @@
+import { NFTType } from '.prisma/client';
 import type { NextApiRequest, NextApiResponse } from 'next';
 import { getImageForToken } from './getImageForToken';
 
-type EtherscanResponseItem = {
-  from: string;
+type EtherscanAPIResponseItem = {
   contractAddress: string;
-  to: string;
   tokenID: string;
   tokenName: string;
 };
 
-type EtherscanResponse = { result: EtherscanResponseItem[] };
-export type TokenTransaction = {
+type EtherscanAPIResponse = {
+  result: EtherscanAPIResponseItem[];
+};
+
+type GetTokensByOwnerResponse = (Omit<
+  EtherscanAPIResponseItem,
+  'contractAddress'
+> & {
+  type: NFTType;
+  address: string;
+})[];
+
+export type ReturnItem = Omit<EtherscanAPIResponseItem, 'contractAddress'> & {
   imageUrl: string;
-  tokenName: string;
-};
-
-type OpenseaItem = {
-  token_id: string;
-  image_url: string;
-  background_color: string;
-  name: string;
-  external_link: string;
-};
-
-type OpenseaResponse = {
-  assets: OpenseaItem[];
+  type: NFTType;
+  address: string;
 };
 
 type ReturnType = {
-  result: TokenTransaction[];
+  result: ReturnItem[];
 };
 
-const getERC721byOwner = async (address: string) => {
+const getERC721byOwner = async (
+  address: string,
+): Promise<GetTokensByOwnerResponse> => {
   const API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
   const erc721 = (await // ERC 721 ownership
   (
@@ -50,21 +51,21 @@ const getERC721byOwner = async (address: string) => {
         method: 'GET',
       },
     )
-  ).json()) as EtherscanResponse;
-  if (!erc721.result || !erc721.result.map) {
-    return {
-      result: [],
-    };
+  ).json()) as EtherscanAPIResponse;
+  if (!erc721?.result || !erc721?.result?.map) {
+    return [];
   }
-  return {
-    result: erc721.result?.map((r) => ({
-      ...r,
-      tokenName: `${r.tokenName} #${r.tokenID}`, // add the ID to the end of the token name
-    })),
-  };
+  return erc721?.result?.map((r) => ({
+    tokenName: r.tokenName,
+    tokenID: r.tokenID,
+    address: r.contractAddress,
+    type: 'ERC721',
+  }));
 };
 
-export const getERC20byOwner = async (address: string) => {
+export const getERC20byOwner = async (
+  address: string,
+): Promise<GetTokensByOwnerResponse> => {
   const API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
   const erc20 = (await // ERC 20 ownership
   (
@@ -83,18 +84,18 @@ export const getERC20byOwner = async (address: string) => {
         method: 'GET',
       },
     )
-  ).json()) as EtherscanResponse;
-  if (!erc20?.result || !erc20.result?.map) {
-    return {
-      result: [],
-    };
+  ).json()) as EtherscanAPIResponse;
+
+  if (!erc20?.result || !erc20?.result?.map) {
+    return [];
   }
-  return {
-    result: erc20.result?.map((r) => ({
-      ...r,
-      tokenName: `${r.tokenName} #${r.tokenID}`, // add the ID to the end of the token name
-    })),
-  };
+
+  return erc20?.result.map((r) => ({
+    tokenName: r.tokenName,
+    tokenID: r.tokenID,
+    address: r.contractAddress,
+    type: 'ERC20',
+  }));
 };
 
 export const getTokensByAddress = async (
@@ -102,24 +103,35 @@ export const getTokensByAddress = async (
 ): Promise<ReturnType> => {
   const erc721 = await getERC721byOwner(address);
   const erc20 = await getERC20byOwner(address);
-  const data = [...erc721.result, ...erc20.result];
+  const data = [...erc721, ...erc20];
 
-  const etherscanImages = await Promise.all(
-    data.map(async (res) => {
-      const { imageUrl } = await getImageForToken(
-        res.contractAddress,
-        res.tokenID,
-      );
-      return {
-        tokenName: res.tokenName,
-        imageUrl,
-      };
-    }),
-  );
+  // let etherscanImages = [];
+
+  const etherscanImages: ReturnItem[] = [];
+  for (let i = 0; i < data?.length; i++) {
+    const datum = data[i];
+    if (!datum) break;
+    try {
+      const image = await getImageForToken(datum.address, datum.tokenID);
+      if (!image || !image.imageUrl) break;
+      etherscanImages.push({
+        tokenID: datum.tokenID,
+        address: datum.address,
+        tokenName: datum.tokenName,
+        imageUrl: image.imageUrl,
+        type: datum.type,
+      });
+    } catch (e) {
+      console.log(e);
+    }
+  }
+
+  console.log(etherscanImages);
+
   /**
    * Remove duplicates and undefined values from the array
    */
-  const final: TokenTransaction[] = [];
+  const final: ReturnItem[] = [];
   const seen = {};
   for (const key in etherscanImages) {
     const item = etherscanImages[key];

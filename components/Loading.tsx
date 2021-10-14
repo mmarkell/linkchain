@@ -5,12 +5,13 @@ import { useEffect, useState } from 'react';
 import DotLoader from 'react-spinners/DotLoader';
 import useAuth from '../hooks/useAuth';
 import useEagerConnect from '../hooks/useEagerConnect';
+import { useLoading } from '../hooks/useLoading';
 
 export const Loading = () => {
   const router = useRouter();
 
   const triedToEagerConnect = useEagerConnect();
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useLoading();
 
   const unsure = triedToEagerConnect === false;
 

@@ -18,8 +18,8 @@ const Signup = () => {
     !active ||
     !account ||
     !user ||
-    !user.profileImageUrl ||
-    !(user.socialUrls?.length > 0);
+    !user.profileNFT ||
+    !(user.links?.length > 0);
 
   const handleClick = useCallback(() => {
     router.push(`/${user?.alias}`);

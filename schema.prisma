@@ -8,10 +8,49 @@ datasource db {
 }
 
 model User {
-  id              Int      @id @default(autoincrement())
-  createdAt       DateTime @default(now())
-  address         String?  @unique
-  alias           String   @unique
-  profileImageUrl String?
-  socialUrls      String[]
+  id           Int      @id @default(autoincrement())
+  role         Role     @default(USER)
+  createdAt    DateTime @default(now())
+  address      String?  @unique
+  alias        String   @unique
+  profileNFT   Nft?     @relation("profileNFT", fields: [nftId], references: [id])
+  links        Link[]   @relation("links")
+  nftId        Int?
+}
+
+model Nft {
+  id       Int     @id @default(autoincrement()) // may be worth making address the ID
+  address  String
+  imageUrl String?
+  type     NFTType
+  User     User[]  @relation("profileNFT")
+}
+
+model Link {
+  id     Int      @id @default(autoincrement())
+  type   LinkType
+  url    String
+  User   User?    @relation("links", fields: [userId], references: [id])
+  userId Int?
+}
+
+enum Role {
+  USER
+  ADMIN
+}
+
+enum NFTType {
+  ERC20
+  ERC721
+}
+
+enum LinkType {
+  TWITTER
+  INSTAGRAM
+  FACEBOOK
+  TIKTOK
+  SNAPCHAT
+  YOUTUBE
+  TWITCH
+  OTHER
 }
