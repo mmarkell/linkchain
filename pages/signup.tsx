@@ -22,8 +22,8 @@ const Signup = () => {
     !(user.socialUrls?.length > 0);
 
   const handleClick = useCallback(() => {
-    router.push('/');
-  }, [router]);
+    router.push(`/${user?.alias}`);
+  }, [router, user]);
 
   return (
     <div>
@@ -71,7 +71,7 @@ const Signup = () => {
               }}
               onClick={handleClick}
             >
-              You are already signed up!
+              Go to your profile!
             </div>
           </div>
         )}

@@ -21,9 +21,7 @@ export const OnboardingElements = (props: PropsType) => {
   const onComplete = useCallback(
     (item: number) => {
       return () => {
-        console.log(numChildren - 1, item, user?.alias);
         if (item === numChildren - 1 && user?.alias) {
-          console.log('proceeding');
           router.push(`/${user?.alias}`, `/${user?.alias}`, { shallow: false });
           router.reload();
         }
@@ -31,7 +29,7 @@ export const OnboardingElements = (props: PropsType) => {
         reloadUser();
       };
     },
-    [numChildren, user?.alias, reloadUser, router],
+    [numChildren, user, reloadUser, router],
   );
 
   const childrenWithProps = useMemo(() => {

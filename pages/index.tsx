@@ -1,6 +1,3 @@
-import { Web3Provider } from '@ethersproject/providers';
-import MetaMaskOnboarding from '@metamask/onboarding';
-import { useWeb3React } from '@web3-react/core';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useCallback } from 'react';
@@ -11,8 +8,7 @@ import useEagerConnect from '../hooks/useEagerConnect';
 
 function Home() {
   const triedToEagerConnect = useEagerConnect();
-  const { user, loaded } = useAuth();
-  const { active, account } = useWeb3React<Web3Provider>();
+  const { user } = useAuth();
   const router = useRouter();
 
   const unsure = triedToEagerConnect === false;
