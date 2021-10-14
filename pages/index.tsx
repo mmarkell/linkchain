@@ -21,9 +21,15 @@ function Home() {
     if (needsOnboarding) {
       router.push('/signup');
     } else {
+      router.push('/edit');
+    }
+  }, [needsOnboarding, router, unsure]);
+
+  const handleVisitPublicProfile = useCallback(() => {
+    if (user && user.alias) {
       router.push(`/${user?.alias}`);
     }
-  }, [needsOnboarding, router, unsure, user?.alias]);
+  }, [router, user]);
 
   return (
     <div>
@@ -71,6 +77,39 @@ function Home() {
             {unsure ? '' : needsOnboarding ? 'sign up' : 'edit your profile'}
           </div>
         </div>
+        {!unsure && !needsOnboarding && (
+          <div
+            style={{
+              background: '#617F8F',
+              border: 'none',
+              fontFamily: 'Space Grotesk',
+              fontSize: '1.4rem',
+              padding: '6px 20px',
+              transition: 'all .3s ease-in-out',
+              borderRadius: 10,
+              color: '#DFCC74',
+              textShadow: '0 0 10px #FFF01F',
+              boxShadow: '0 0 10px #BE95C4',
+              width: '20%',
+              height: '20%',
+              position: 'absolute',
+              top: '50%',
+              left: '40%',
+              cursor: 'pointer',
+              display: 'table',
+            }}
+          >
+            <div
+              style={{
+                display: 'table-cell',
+                verticalAlign: 'middle',
+              }}
+              onClick={handleVisitPublicProfile}
+            >
+              view your public profile
+            </div>
+          </div>
+        )}
       </main>
 
       <style jsx>{`

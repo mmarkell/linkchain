@@ -1,30 +1,26 @@
+import { Link as SocialLinks, LinkType, Nft } from '.prisma/client';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import Head from 'next/head';
-import Link from 'next/link';
+import Image from 'next/image';
 import React from 'react';
+import { LinkItem } from '../components/LinkItem';
 import Logo from '../components/Logo';
 import NFTCollection from '../components/NFTCollection';
+import { ProfileHeader } from '../components/ProfileHeader';
 import { prisma } from '../db';
 import { getTokensByAddress, ReturnItem } from './api/getTokensByAddress';
 
 type Props = {
+  profileNFT: Nft;
   nfts: ReturnItem[];
-  socialUrls: string[];
+  links: SocialLinks[];
   alias: string;
 };
 
 const UserPage = (props: Props) => {
-  const { nfts, socialUrls, alias } = props;
-
+  const { nfts, links, alias, profileNFT } = props;
   return (
-    <div
-      style={{
-        backgroundColor: '#231942',
-        width: '100%',
-        height: '100%',
-        position: 'absolute',
-      }}
-    >
+    <>
       <Head>
         <title>LinkChain</title>
         <link rel="icon" href="/favicon.ico" />
@@ -34,39 +30,24 @@ const UserPage = (props: Props) => {
           <Logo />
         </nav>
       </header>
-      <div>
-        <p
-          style={{
-            color: '#DFCC74',
-            textShadow: '0 0 10px #FFF01F',
-          }}
-        >
-          Social URLs
-        </p>
-        {socialUrls.map((item, i) => (
-          <div
-            style={{
-              color: '#DFCC74',
-              textShadow: '0 0 10px #FFF01F',
-            }}
-            key={`${item}-${i}`}
-          >
-            <Link
-              href={
-                item.startsWith('www') || item.startsWith('http')
-                  ? item
-                  : `https://${item}`
-              }
-            >
-              {item}
-            </Link>
-          </div>
+      <ProfileHeader profileNFT={profileNFT} alias={alias} />
+      <div
+        style={{
+          textAlign: 'center',
+        }}
+      >
+        {links.map((item, i) => (
+          <LinkItem item={item} key={`link-${i}`} />
         ))}
       </div>
+      <br />
+      <br />
+      <br />
       <h2
         style={{
           color: '#DFCC74',
           textShadow: '0 0 10px #FFF01F',
+          textAlign: 'center',
         }}
       >
         NFT Collection
@@ -86,7 +67,7 @@ const UserPage = (props: Props) => {
           background-color: #617f8f;
         }
       `}</style>
-    </div>
+    </>
   );
 };
 
@@ -106,6 +87,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
       },
       include: {
         links: true,
+        profileNFT: true,
       },
       rejectOnNotFound: true,
     });
@@ -114,13 +96,13 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
     return {
       revalidate: 120,
       props: {
+        profileNFT: user.profileNFT,
         nfts: result,
-        socialUrls: user.links?.map((link) => link.url),
+        links: user.links,
         alias,
       }, // will be passed to the page component as props
     };
   } catch (e) {
-    console.error(e);
     return {
       notFound: true,
     };

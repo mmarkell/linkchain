@@ -1,7 +1,10 @@
 import Image from 'next/image';
+import { useRouter } from 'next/router';
+import { useCallback } from 'react';
 import { useLoading } from '../hooks/useLoading';
 import { ReturnItem } from '../pages/api/getTokensByAddress';
 import { SetProfilePictureCommand } from '../pages/api/setProfilePicture';
+import { formatEtherscanLink } from '../util';
 
 type Props = {
   nfts: ReturnItem[];
@@ -17,29 +20,43 @@ const NFTCollection = (props: Props) => {
 
   const [loading, setLoading] = useLoading();
 
-  const handleMakeProfile = (nft: ReturnItem) => {
-    if (!userId || !address) return;
+  const handleClick = useCallback(
+    (nft: ReturnItem) => {
+      if (isOnboarding) {
+        if (!userId || !address) return;
 
-    const body: SetProfilePictureCommand = {
-      userAddress: address,
-      nftArgs: {
-        ...nft,
-      },
-    };
-    setLoading(true);
-    fetch('/api/setProfilePicture', {
-      body: JSON.stringify(body),
-      method: 'POST',
-    })
-      .then(() => setLoading(false))
-      .then(onSaveProfile);
-  };
+        const body: SetProfilePictureCommand = {
+          userAddress: address,
+          nftArgs: {
+            ...nft,
+          },
+        };
+        setLoading(true);
+        fetch('/api/setProfilePicture', {
+          body: JSON.stringify(body),
+          method: 'POST',
+        })
+          .then(() => setLoading(false))
+          .then(onSaveProfile);
+      } else {
+        const link = nft.tokenID
+          ? `https://etherscan.io/token/${nft.address}?a=${nft.tokenID}`
+          : `https://etherscan.io/token/${nft.address}`;
+
+        if (typeof window !== 'undefined') {
+          window.open(link, '_blank').focus();
+        }
+      }
+    },
+    [address, isOnboarding, onSaveProfile, setLoading, userId],
+  );
 
   return (
     <div
       style={{
         overflowY: 'auto',
         backgroundColor: '#231942',
+        textAlign: 'center',
       }}
     >
       {isOnboarding && nfts?.length > 0 ? (
@@ -50,8 +67,8 @@ const NFTCollection = (props: Props) => {
       {nfts.map((item, i) => (
         <div
           key={`${item.tokenName}-${i}`}
-          className={isOnboarding ? 'clickable card' : 'card'}
-          onClick={() => handleMakeProfile(item)}
+          className={'clickable card'}
+          onClick={() => handleClick(item)}
         >
           <Image
             loading="lazy"

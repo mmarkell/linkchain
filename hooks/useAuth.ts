@@ -18,6 +18,8 @@ type Response = {
   reloadUser: () => void;
 };
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 export default function useAuth(): Response {
   const { account, active } = useWeb3React<Web3Provider>();
   const [user, setUser] = useState<User>(null);
