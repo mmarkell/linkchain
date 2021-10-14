@@ -57,6 +57,7 @@ const NFTCollection = (props: Props) => {
         overflowY: 'auto',
         backgroundColor: '#231942',
         textAlign: 'center',
+        color: 'white',
       }}
     >
       {isOnboarding && nfts?.length > 0 ? (
