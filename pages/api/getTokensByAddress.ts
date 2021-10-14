@@ -121,12 +121,8 @@ export const getTokensByAddress = async (
         imageUrl: image.imageUrl,
         type: datum.type,
       });
-    } catch (e) {
-      console.log(e);
-    }
+    } catch (e) {}
   }
-
-  console.log(etherscanImages);
 
   /**
    * Remove duplicates and undefined values from the array
