@@ -46,11 +46,15 @@ export default async function handler(
   const tokenId = query.tokenId;
   if (typeof address === 'string' && typeof tokenId === 'string') {
     const result = await getImageForToken(address, tokenId);
-    res.setHeader(
-      'Cache-Control',
-      'public, s-maxage=10, stale-while-revalidate=59',
-    );
-    res.status(200).json(result);
+    if (result) {
+      res.setHeader(
+        'Cache-Control',
+        'public, s-maxage=10, stale-while-revalidate=59',
+      );
+      res.status(200).json(result);
+    } else {
+      res.status(400);
+    }
   } else {
     res.status(500);
   }

@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { TokenTransaction } from '../pages/api/getTokensByAddress';
+import { ReturnItem } from '../pages/api/getTokensByAddress';
 
 export default function useNFTCollection(address: string) {
-  const [collection, setCollection] = useState<TokenTransaction[]>([]);
+  const [collection, setCollection] = useState<ReturnItem[]>([]);
   const [collectionLoaded, setCollectionLoaded] = useState(false);
 
   useEffect(() => {
@@ -11,7 +11,7 @@ export default function useNFTCollection(address: string) {
     } else {
       fetch(`/api/getTokensByAddress?address=${address}`)
         .then((r) => r.json())
-        .then(({ result }: { result: TokenTransaction[] }) => {
+        .then(({ result }: { result: ReturnItem[] }) => {
           setCollection(result);
           setCollectionLoaded(true);
         });
