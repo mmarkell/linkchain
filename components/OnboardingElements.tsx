@@ -74,7 +74,7 @@ export const OnboardingElements = (props: PropsType) => {
           alignItems: 'center',
           flexDirection: 'column',
           position: 'relative',
-          backgroundColor: '#617F8F',
+          backgroundColor: '#white',
         }}
       >
         {item}

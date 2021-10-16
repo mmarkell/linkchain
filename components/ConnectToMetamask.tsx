@@ -61,8 +61,6 @@ export const ConnectToMetamask = (props: OnboardingPropsType) => {
             transition: 'all .3s ease-in-out',
             borderRadius: 10,
             color: 'black',
-            textShadow: '0 0 10px red',
-            boxShadow: '0 0 10px red',
           }}
         >
           Connected!

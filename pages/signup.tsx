@@ -52,7 +52,6 @@ const Signup = () => {
               transition: 'all .3s ease-in-out',
               borderRadius: 10,
               color: 'black',
-              textShadow: '0 0 10px red',
               width: '20%',
               height: '20%',
               position: 'absolute',

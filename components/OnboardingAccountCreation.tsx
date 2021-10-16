@@ -114,7 +114,6 @@ export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
             backgroundColor: 'transparent',
             backgroundImage: 'none',
             border: 'none',
-            boxShadow: 'none',
             padding: '0px 12px 0px 2px',
             font: 'inherit',
             appearance: 'none',

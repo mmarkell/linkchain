@@ -43,7 +43,7 @@ export const ProfileHeader = (props: Props) => {
         <h2
           style={{
             display: 'block',
-            color: 'white',
+            color: 'black',
             cursor: 'pointer',
           }}
         >

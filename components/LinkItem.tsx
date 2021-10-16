@@ -33,7 +33,6 @@ export const LinkItem = (props: Props) => {
         display: 'block',
         transition:
           'box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s',
-        border: '2px solid red',
         backgroundColor: 'black',
         position: 'relative',
         margin: 'auto',

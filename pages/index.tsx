@@ -96,7 +96,6 @@ function Home() {
             style={{
               cursor: 'pointer',
               color: 'black',
-              textShadow: '0 0 10px red',
             }}
             onClick={goToDemo}
           >
@@ -114,7 +113,6 @@ function Home() {
               transition: 'all .3s ease-in-out',
               borderRadius: 10,
               color: 'white',
-              boxShadow: '0 0 10px red',
               width: '30%',
               height: '30%',
               cursor: 'pointer',
@@ -136,7 +134,6 @@ function Home() {
             transition: 'all .3s ease-in-out',
             borderRadius: 10,
             color: 'white',
-            boxShadow: '0 0 10px red',
             width: '30%',
             height: '30%',
             cursor: 'pointer',
@@ -160,7 +157,7 @@ function Home() {
           transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
           transition: opacity 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s,
             transform 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s;
-          background-color: #617f8f;
+          background-color: white;
         }
         main {
           text-align: center;
