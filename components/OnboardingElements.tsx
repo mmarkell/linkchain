@@ -56,7 +56,7 @@ export const OnboardingElements = (props: PropsType) => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: 'black',
+        backgroundColor: 'white',
       }}
     >
       <div
