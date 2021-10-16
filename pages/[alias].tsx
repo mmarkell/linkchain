@@ -108,7 +108,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
       props: {
         profileNFT: user.profileNFT,
         nfts: result,
-        links: user.links,
+        links: user.links ?? [],
         alias,
         address: user.address,
       }, // will be passed to the page component as props
@@ -121,12 +121,19 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const users = await prisma.user.findMany();
-  const paths = users.map((user) => {
-    return {
-      params: { alias: user.alias },
-    };
+  const users = await prisma.user.findMany({
+    include: {
+      links: true,
+      profileNFT: true,
+    },
   });
+  const paths = users
+    .filter((user) => user.alias && user.profileNFT?.imageUrl)
+    .map((user) => {
+      return {
+        params: { alias: user.alias },
+      };
+    });
   return {
     paths,
     fallback: 'blocking',
