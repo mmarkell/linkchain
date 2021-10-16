@@ -26,11 +26,16 @@ const validateSocialAccounts = (socialAccounts: SocialAccounts) => {
     });
 };
 
-export const LinkSocials = (props: OnboardingPropsType) => {
+export const LinkSocials = (
+  props: OnboardingPropsType & { existingLinks?: SocialAccounts },
+) => {
   const { account } = useWeb3React();
-  const { onComplete } = props;
+  const { onComplete, existingLinks } = props;
 
-  const [socialAccounts, setSocialAccounts] = useState<SocialAccounts>([]);
+  console.log(existingLinks);
+  const [socialAccounts, setSocialAccounts] = useState<SocialAccounts>(
+    existingLinks ?? [],
+  );
 
   const [error, setError] = useState('');
 
@@ -98,13 +103,15 @@ export const LinkSocials = (props: OnboardingPropsType) => {
 
   return (
     <div>
-      <h1
-        style={{
-          top: 0,
-        }}
-      >
-        Create your linkchain!
-      </h1>
+      {!existingLinks && (
+        <h1
+          style={{
+            top: 0,
+          }}
+        >
+          Create your linkchain!
+        </h1>
+      )}
       <div
         onClick={addElement}
         style={{
@@ -132,6 +139,8 @@ export const LinkSocials = (props: OnboardingPropsType) => {
       {socialAccounts.map((link) => (
         <SocialInput
           key={link.id}
+          title={link.title}
+          link={link.link}
           onEdit={(title: string, _link: string) =>
             updateElement(link.id, title, _link)
           }

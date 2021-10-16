@@ -3,11 +3,13 @@ import { useWeb3React } from '@web3-react/core';
 import Head from 'next/head';
 import React from 'react';
 import Account from '../components/Account';
+import { LinkSocials } from '../components/LinkSocials';
 import Logo from '../components/Logo';
 import NFTCollection from '../components/NFTCollection';
 import useAuth from '../hooks/useAuth';
 import useEagerConnect from '../hooks/useEagerConnect';
 import useNFTCollection from '../hooks/useNFTCollection';
+import crypto from 'crypto';
 
 const Edit = () => {
   const triedToEagerConnect = useEagerConnect();
@@ -31,7 +33,7 @@ const Edit = () => {
       </header>
 
       <main>
-        {user && (
+        {user && collection && (
           <NFTCollection
             userId={user.id}
             selectedNFT={user?.profileNFT}
@@ -40,6 +42,17 @@ const Edit = () => {
             alias={user.alias}
             nfts={collection}
             onSaveProfile={() => console.log('Saved new NFT!')}
+          />
+        )}
+        <br />
+        <br />
+        {user && user.links && (
+          <LinkSocials
+            existingLinks={user.links.map((_link) => ({
+              link: _link.url,
+              title: _link.title,
+              id: crypto.randomBytes(20).toString('hex'),
+            }))}
           />
         )}
       </main>

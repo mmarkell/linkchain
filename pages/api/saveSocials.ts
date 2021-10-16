@@ -30,6 +30,12 @@ export default async function handler(
     });
   }
 
+  await prisma.link.deleteMany({
+    where: {
+      userId: existingUser.id,
+    },
+  });
+
   const result = await prisma.link.createMany({
     data: socialAccounts.map((elem: SocialAccount) => {
       return {

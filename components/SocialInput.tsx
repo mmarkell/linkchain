@@ -4,12 +4,14 @@ type Props = {
   error?: string;
   onEdit: (title: string, link: string) => void;
   onDelete: () => void;
+  title?: string;
+  link?: string;
 };
 
 export const SocialInput = (props: Props) => {
-  const { error, onEdit, onDelete } = props;
-  const [title, setTitle] = useState('');
-  const [link, setLink] = useState('');
+  const { error, onEdit, onDelete, title: oldTitle, link: oldLink } = props;
+  const [title, setTitle] = useState(oldTitle ?? '');
+  const [link, setLink] = useState(oldLink ?? '');
 
   return (
     <div
