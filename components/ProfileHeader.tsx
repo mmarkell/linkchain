@@ -35,14 +35,21 @@ export const ProfileHeader = (props: Props) => {
           src={profileNFT.imageUrl}
         />
       </a>
-      <h2
-        style={{
-          display: 'block',
-          color: 'white',
-        }}
+      <a
+        href={formatEtherscanLink('Account', [1, address])}
+        target="_blank"
+        rel="noreferrer"
       >
-        {alias}
-      </h2>
+        <h2
+          style={{
+            display: 'block',
+            color: 'white',
+            cursor: 'pointer',
+          }}
+        >
+          {alias}
+        </h2>
+      </a>
     </div>
   );
 };
