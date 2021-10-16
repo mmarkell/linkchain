@@ -3,10 +3,12 @@ import Image from 'next/image';
 type Props = {
   profileNFT: Nft;
   alias: string;
+  address: string;
 };
+import { formatEtherscanLink } from '../util';
 
 export const ProfileHeader = (props: Props) => {
-  const { profileNFT, alias } = props;
+  const { profileNFT, alias, address } = props;
   return (
     <div
       style={{
@@ -15,7 +17,7 @@ export const ProfileHeader = (props: Props) => {
       }}
     >
       <a
-        href={`https://etherscan.io/token/${profileNFT.address}`}
+        href={formatEtherscanLink('Account', [1, address])}
         target="_blank"
         style={{
           // profile picture

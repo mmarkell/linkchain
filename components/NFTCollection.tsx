@@ -4,7 +4,6 @@ import { useCallback } from 'react';
 import { useLoading } from '../hooks/useLoading';
 import { ReturnItem } from '../pages/api/getTokensByAddress';
 import { SetProfilePictureCommand } from '../pages/api/setProfilePicture';
-import { formatEtherscanLink } from '../util';
 
 type Props = {
   nfts: ReturnItem[];

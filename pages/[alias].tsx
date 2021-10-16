@@ -15,10 +15,11 @@ type Props = {
   nfts: ReturnItem[];
   links: SocialLinks[];
   alias: string;
+  address: string;
 };
 
 const UserPage = (props: Props) => {
-  const { nfts, links, alias, profileNFT } = props;
+  const { nfts, links, alias, profileNFT, address } = props;
   return (
     <>
       <Head>
@@ -30,7 +31,7 @@ const UserPage = (props: Props) => {
           <Logo />
         </nav>
       </header>
-      <ProfileHeader profileNFT={profileNFT} alias={alias} />
+      <ProfileHeader profileNFT={profileNFT} alias={alias} address={address} />
       <div
         style={{
           textAlign: 'center',
@@ -100,6 +101,7 @@ export const getStaticProps: GetStaticProps<Props> = async (context) => {
         nfts: result,
         links: user.links,
         alias,
+        address: user.address,
       }, // will be passed to the page component as props
     };
   } catch (e) {
