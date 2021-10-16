@@ -33,7 +33,7 @@ type ReturnType = {
 const getERC721byOwner = async (
   address: string,
 ): Promise<GetTokensByOwnerResponse> => {
-  const API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
+  const API_KEY = process.env.ETHERSCAN_API_KEY;
   const erc721 = (await // ERC 721 ownership
   (
     await fetch(
@@ -66,7 +66,7 @@ const getERC721byOwner = async (
 export const getERC20byOwner = async (
   address: string,
 ): Promise<GetTokensByOwnerResponse> => {
-  const API_KEY = process.env.NEXT_PUBLIC_ETHERSCAN_API_KEY;
+  const API_KEY = process.env.ETHERSCAN_API_KEY;
   const erc20 = (await // ERC 20 ownership
   (
     await fetch(
