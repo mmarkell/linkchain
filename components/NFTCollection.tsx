@@ -54,7 +54,7 @@ const NFTCollection = (props: Props) => {
     <div
       style={{
         overflowY: 'auto',
-        backgroundColor: '#231942',
+        backgroundColor: '#617F8F',
         textAlign: 'center',
         color: 'white',
       }}

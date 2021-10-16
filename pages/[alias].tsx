@@ -46,8 +46,8 @@ const UserPage = (props: Props) => {
       <br />
       <h2
         style={{
-          color: '#DFCC74',
-          textShadow: '0 0 10px #FFF01F',
+          color: 'black',
+          textShadow: '0 0 10px red',
           textAlign: 'center',
         }}
       >

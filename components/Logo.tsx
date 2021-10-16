@@ -14,11 +14,12 @@ const Logo = () => {
           style={{
             fontSize: '2.5rem',
             fontWeight: 700,
-            color: '#DFCC74',
             marginLeft: 20,
             marginTop: 10,
             marginRight: 20,
-            textShadow: '0 0 10px #FFF01F',
+            color: 'black',
+            textShadow: '0 0 10px red',
+            boxShadow: '0 0 10px red',
           }}
         >
           LinkChain

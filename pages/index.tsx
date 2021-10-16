@@ -31,6 +31,10 @@ function Home() {
     }
   }, [router, user]);
 
+  const goToDemo = useCallback(() => {
+    router.push(`/michael`);
+  }, [router]);
+
   return (
     <div>
       <Head>
@@ -48,68 +52,90 @@ function Home() {
       <main>
         <div
           style={{
-            background: '#617F8F',
             border: 'none',
             fontFamily: 'Space Grotesk',
-            fontSize: '1.4rem',
+            fontSize: '3.5rem',
             padding: '6px 20px',
             transition: 'all .3s ease-in-out',
             borderRadius: 10,
-            color: '#DFCC74',
-            textShadow: '0 0 10px #FFF01F',
-            boxShadow: '0 0 10px #BE95C4',
-            width: '20%',
-            height: '20%',
-            position: 'absolute',
-            top: '25%',
-            left: '40%',
-            cursor: 'pointer',
-            display: 'table',
+            width: '60%',
+            margin: 'auto',
+            marginTop: '2rem',
+            color: 'black',
           }}
         >
-          <div
+          Prove your worth
+        </div>
+        <div
+          style={{
+            border: 'none',
+            fontFamily: 'Space Grotesk',
+            fontSize: '2rem',
+            padding: '6px 20px',
+            color: 'black',
+            transition: 'all .3s ease-in-out',
+            borderRadius: 10,
+            width: '60%',
+            margin: 'auto',
+            marginTop: '2rem',
+          }}
+        >
+          Verify your NFTs across all your social media {'  '}
+          <span
             style={{
-              display: 'table-cell',
-              verticalAlign: 'middle',
+              cursor: 'pointer',
+              color: 'black',
+              textShadow: '0 0 10px red',
             }}
-            onClick={handleClick}
+            onClick={goToDemo}
           >
-            {unsure ? '' : needsOnboarding ? 'sign up' : 'edit your profile'}
-          </div>
+            (or see a demo)
+          </span>
         </div>
         {!unsure && !needsOnboarding && (
           <div
             style={{
-              background: '#617F8F',
+              backgroundColor: 'black',
               border: 'none',
               fontFamily: 'Space Grotesk',
               fontSize: '1.4rem',
-              padding: '6px 20px',
+              padding: '60px 20px',
               transition: 'all .3s ease-in-out',
               borderRadius: 10,
-              color: '#DFCC74',
-              textShadow: '0 0 10px #FFF01F',
-              boxShadow: '0 0 10px #BE95C4',
-              width: '20%',
-              height: '20%',
-              position: 'absolute',
-              top: '50%',
-              left: '40%',
+              color: 'white',
+              boxShadow: '0 0 10px red',
+              width: '30%',
+              height: '30%',
               cursor: 'pointer',
-              display: 'table',
+              margin: 'auto',
+              marginTop: '2rem',
             }}
+            onClick={handleVisitPublicProfile}
           >
-            <div
-              style={{
-                display: 'table-cell',
-                verticalAlign: 'middle',
-              }}
-              onClick={handleVisitPublicProfile}
-            >
-              view your public profile
-            </div>
+            view your public profile
           </div>
         )}
+        <div
+          style={{
+            backgroundColor: 'black',
+            border: 'none',
+            fontFamily: 'Space Grotesk',
+            fontSize: '1.4rem',
+            padding: '60px 20px',
+            transition: 'all .3s ease-in-out',
+            borderRadius: 10,
+            color: 'white',
+            boxShadow: '0 0 10px red',
+            width: '30%',
+            height: '30%',
+            cursor: 'pointer',
+            margin: 'auto',
+            marginTop: '2rem',
+          }}
+          onClick={handleClick}
+        >
+          {unsure ? '' : needsOnboarding ? 'sign up' : 'edit your profile'}
+        </div>
       </main>
 
       <style jsx>{`
@@ -123,7 +149,7 @@ function Home() {
           transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
           transition: opacity 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s,
             transform 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s;
-          background-color: #231942;
+          background-color: #617f8f;
         }
         main {
           text-align: center;

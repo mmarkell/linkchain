@@ -23,6 +23,7 @@ function App({ Component, pageProps }: AppProps) {
       router.events.off('routeChangeComplete', handleRouteChange);
     };
   }, [router.events]);
+
   return (
     <Web3ReactProvider getLibrary={getLibrary}>
       <Component {...pageProps} />

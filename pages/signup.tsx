@@ -52,9 +52,9 @@ const Signup = () => {
               padding: '6px 20px',
               transition: 'all .3s ease-in-out',
               borderRadius: 10,
-              color: '#DFCC74',
-              textShadow: '0 0 10px #FFF01F',
-              boxShadow: '0 0 10px #BE95C4',
+              color: 'black',
+              textShadow: '0 0 10px red',
+              boxShadow: '0 0 10px red',
               width: '20%',
               height: '20%',
               position: 'absolute',
@@ -88,7 +88,7 @@ const Signup = () => {
           transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
           transition: opacity 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s,
             transform 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s;
-          background-color: #231942;
+          background-color: #617f8f;
         }
         main {
           text-align: center;

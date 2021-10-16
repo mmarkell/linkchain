@@ -38,9 +38,8 @@ export const LinkItem = (props: Props) => {
           overflow: 'hidden',
           transition:
             'box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s',
-          border: '2px solid rgb(255, 255, 255)',
-          backgroundColor: 'rgb(255, 255, 255)',
-          color: 'rgb(61, 59, 60)',
+          border: '2px solid red',
+          backgroundColor: 'black',
           position: 'relative',
           height: 50,
           width: '30%',
@@ -70,6 +69,8 @@ export const LinkItem = (props: Props) => {
             position: 'relative',
             lineHeight: 3,
             width: '100%',
+            fontFamily: 'Space Grotesk',
+            color: 'white',
           }}
         >
           {item.title}

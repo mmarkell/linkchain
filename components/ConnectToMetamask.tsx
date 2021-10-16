@@ -61,9 +61,9 @@ export const ConnectToMetamask = (props: OnboardingPropsType) => {
             padding: '6px 20px',
             transition: 'all .3s ease-in-out',
             borderRadius: 10,
-            color: '#DFCC74',
-            textShadow: '0 0 10px #FFF01F',
-            boxShadow: '0 0 10px #BE95C4',
+            color: 'black',
+            textShadow: '0 0 10px red',
+            boxShadow: '0 0 10px red',
           }}
         >
           Connected!
@@ -79,7 +79,9 @@ export const ConnectToMetamask = (props: OnboardingPropsType) => {
             transition: 'all .3s ease-in-out',
             cursor: 'pointer',
             borderRadius: 10,
-            color: '#fff',
+            color: 'black',
+            textShadow: '0 0 10px red',
+            boxShadow: '0 0 10px red',
           }}
           onClick={handleClick}
         >
