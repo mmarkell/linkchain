@@ -40,6 +40,17 @@ function Home() {
       <Head>
         <title>LinkChain</title>
         <link rel="icon" href="/favicon.ico" />
+        <meta name="twitter:card" content="summary" />
+        <meta property="og:url" content="https://www.linkchain.me" />
+        <meta property="og:title" content="LinkChain" />
+        <meta
+          property="og:description"
+          content="Verify your NFTs across all your social media"
+        />
+        <meta
+          property="og:image"
+          content="https://commons.wikimedia.org/wiki/File:Ethereum_logo_2014.svg"
+        />
       </Head>
 
       <header>
