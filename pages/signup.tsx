@@ -45,7 +45,6 @@ const Signup = () => {
         ) : (
           <div
             style={{
-              background: '#617F8F',
               border: 'none',
               fontFamily: 'Space Grotesk',
               fontSize: '1.4rem',
@@ -54,7 +53,6 @@ const Signup = () => {
               borderRadius: 10,
               color: 'black',
               textShadow: '0 0 10px red',
-              boxShadow: '0 0 10px red',
               width: '20%',
               height: '20%',
               position: 'absolute',
@@ -88,7 +86,6 @@ const Signup = () => {
           transform: matrix3d(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
           transition: opacity 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s,
             transform 1.5s cubic-bezier(0.5, 0, 0, 1) 0.2s;
-          background-color: #617f8f;
         }
         main {
           text-align: center;

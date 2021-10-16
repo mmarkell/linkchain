@@ -56,7 +56,7 @@ export const OnboardingElements = (props: PropsType) => {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
-        backgroundColor: '#617F8F',
+        backgroundColor: 'black',
       }}
     >
       <div
@@ -68,14 +68,13 @@ export const OnboardingElements = (props: PropsType) => {
           margin: 20,
           minHeight: 300,
           borderRadius: 25,
-          boxShadow: '0 0 75px #BE95C4',
           padding: '20px 20px 55px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
           flexDirection: 'column',
           position: 'relative',
-          backgroundColor: '#5E548E',
+          backgroundColor: '#617F8F',
         }}
       >
         {item}

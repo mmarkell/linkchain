@@ -54,7 +54,6 @@ export const ConnectToMetamask = (props: OnboardingPropsType) => {
       {Boolean(account) ? (
         <div
           style={{
-            background: '#617F8F',
             border: 'none',
             fontFamily: 'Space Grotesk',
             fontSize: '1.4rem',
@@ -71,7 +70,6 @@ export const ConnectToMetamask = (props: OnboardingPropsType) => {
       ) : (
         <button
           style={{
-            background: '#617F8F',
             border: 'none',
             fontFamily: 'Space Grotesk',
             fontSize: '1.4rem',
@@ -80,8 +78,6 @@ export const ConnectToMetamask = (props: OnboardingPropsType) => {
             cursor: 'pointer',
             borderRadius: 10,
             color: 'black',
-            textShadow: '0 0 10px red',
-            boxShadow: '0 0 10px red',
           }}
           onClick={handleClick}
         >

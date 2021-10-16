@@ -19,7 +19,6 @@ const Logo = () => {
             marginRight: 20,
             color: 'black',
             textShadow: '0 0 10px red',
-            boxShadow: '0 0 10px red',
           }}
         >
           LinkChain
