@@ -27,10 +27,10 @@ const UserPage = (props: Props) => {
         <title>LinkChain</title>
         <meta name="twitter:card" content="summary" />
         <meta property="og:url" content={`https://www.linkchain.me/${alias}`} />
-        <meta property="og:title" content={`${alias}'s linkchain'`} />
+        <meta property="og:title" content={`${alias}'s LinkChain!`} />
         <meta
           property="og:description"
-          content={`See ${alias}'s verified NFTs and social links on Linkchain!'`}
+          content={`See ${alias}'s verified NFTs and social links on LinkChain!`}
         />
         <meta property="og:image" content={profileNFT.imageUrl} />
         <link rel="icon" href="/favicon.ico" />
