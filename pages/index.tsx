@@ -49,7 +49,7 @@ function Home() {
         />
         <meta
           property="og:image"
-          content="https://commons.wikimedia.org/wiki/File:Ethereum_logo_2014.svg"
+          content="https://ethereum.org/static/28214bb68eb5445dcb063a72535bc90c/3bf79/hero.png"
         />
       </Head>
 
