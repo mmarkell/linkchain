@@ -30,52 +30,47 @@ export const LinkItem = (props: Props) => {
       }
       target="_blank"
       style={{
+        display: 'block',
+        transition:
+          'box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s',
+        border: '2px solid red',
+        backgroundColor: 'black',
+        position: 'relative',
+        margin: 'auto',
+        marginBottom: 10,
         cursor: 'pointer',
+        height: 50,
+        width: '30%',
       }}
     >
       <div
         style={{
+          position: 'absolute',
+          top: '50%',
+          transform: 'translateY(-50%)',
+          pointerEvents: 'none',
           overflow: 'hidden',
-          transition:
-            'box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s',
-          border: '2px solid red',
-          backgroundColor: 'black',
-          position: 'relative',
-          height: 50,
-          width: '30%',
-          margin: 'auto',
-          marginBottom: 10,
+          justifyContent: 'center',
+          alignItems: 'center',
+          display: 'flex',
+          left: 4,
+          width: 46,
+          height: 46,
         }}
       >
-        <div
-          style={{
-            position: 'absolute',
-            top: '50%',
-            transform: 'translateY(-50%)',
-            pointerEvents: 'none',
-            overflow: 'hidden',
-            justifyContent: 'center',
-            alignItems: 'center',
-            display: 'flex',
-            left: 4,
-            width: 46,
-            height: 46,
-          }}
-        >
-          {iconMap[item.type]}
-        </div>
-        <span
-          style={{
-            position: 'relative',
-            lineHeight: 3,
-            width: '100%',
-            fontFamily: 'Space Grotesk',
-            color: 'white',
-          }}
-        >
-          {item.title}
-        </span>
+        {iconMap[item.type]}
       </div>
+      <span
+        style={{
+          position: 'relative',
+          lineHeight: 3,
+          width: '100%',
+          fontFamily: 'Space Grotesk',
+          color: 'white',
+        }}
+      >
+        {item.title}
+      </span>
     </a>
   );
 };
