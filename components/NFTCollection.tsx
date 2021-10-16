@@ -1,6 +1,7 @@
+import { Nft } from '.prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useCallback } from 'react';
+import { useCallback, useState } from 'react';
 import { useLoading } from '../hooks/useLoading';
 import { ReturnItem } from '../pages/api/getTokensByAddress';
 import { SetProfilePictureCommand } from '../pages/api/setProfilePicture';
@@ -12,18 +13,28 @@ type Props = {
   address?: string;
   userId?: number;
   onSaveProfile?: () => void;
+  selectedNFT?: Nft;
 };
 
 const NFTCollection = (props: Props) => {
-  const { nfts, alias, isOnboarding, address, onSaveProfile, userId } = props;
+  const {
+    nfts,
+    alias,
+    isOnboarding,
+    address,
+    onSaveProfile,
+    userId,
+    selectedNFT,
+  } = props;
 
+  const [chosenImage, setChosenImage] = useState<string>(selectedNFT?.imageUrl);
   const [loading, setLoading] = useLoading();
 
   const handleClick = useCallback(
     (nft: ReturnItem) => {
       if (isOnboarding) {
         if (!userId || !address) return;
-
+        setChosenImage(nft.imageUrl);
         const body: SetProfilePictureCommand = {
           userAddress: address,
           nftArgs: {
@@ -79,10 +90,12 @@ const NFTCollection = (props: Props) => {
             placeholder="blur"
             blurDataURL="url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==)"
           />
-          {alias && (
+          {chosenImage === item.imageUrl && (
             <a
               href={`https://twitter.com/intent/tweet?text=I just verified my ownership of ${encodeURIComponent(
                 item.tokenName,
+              )} ${encodeURIComponent(
+                item.tokenID,
               )} on LinkChain!&url=https://linkchain.com/${alias}&via=linkchain`}
               target="_blank"
               rel="noreferrer"
@@ -90,10 +103,10 @@ const NFTCollection = (props: Props) => {
               title="Share to Twitter"
             >
               <Image
-                src="/twitter_blue.png"
+                src="/verified.png"
                 width={25}
                 height={25}
-                alt="Share to Twitter"
+                alt="Verified Profile Picture"
               />
             </a>
           )}
@@ -105,7 +118,7 @@ const NFTCollection = (props: Props) => {
         }
 
         .social-card {
-          display: none;
+          displa: block;
           z-index: 10;
           position: absolute;
           bottom: 10px;
@@ -145,10 +158,6 @@ const NFTCollection = (props: Props) => {
         .card:hover {
           -webkit-transform: scale(1.1, 1.1);
           transform: scale(1.1, 1.1);
-        }
-
-        .card:hover > .social-card {
-          display: block;
         }
 
         .card:hover::after {

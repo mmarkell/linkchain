@@ -1,11 +1,20 @@
+import { Web3Provider } from '@ethersproject/providers';
+import { useWeb3React } from '@web3-react/core';
 import Head from 'next/head';
 import React from 'react';
 import Account from '../components/Account';
 import Logo from '../components/Logo';
+import NFTCollection from '../components/NFTCollection';
+import useAuth from '../hooks/useAuth';
 import useEagerConnect from '../hooks/useEagerConnect';
+import useNFTCollection from '../hooks/useNFTCollection';
 
 const Edit = () => {
   const triedToEagerConnect = useEagerConnect();
+  const { user, reloadUser } = useAuth();
+  const { account, active } = useWeb3React<Web3Provider>();
+
+  const { collection, collectionLoaded } = useNFTCollection(account);
 
   return (
     <div>
@@ -22,13 +31,17 @@ const Edit = () => {
       </header>
 
       <main>
-        <div
-          style={{
-            color: 'white',
-          }}
-        >
-          Ability to edit your profile is coming soon :)
-        </div>
+        {user && (
+          <NFTCollection
+            userId={user.id}
+            selectedNFT={user?.profileNFT}
+            isOnboarding={true}
+            address={user.address}
+            alias={user.alias}
+            nfts={collection}
+            onSaveProfile={() => console.log('Saved new NFT!')}
+          />
+        )}
       </main>
 
       <style jsx>{`
