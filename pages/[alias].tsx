@@ -20,10 +20,19 @@ type Props = {
 
 const UserPage = (props: Props) => {
   const { nfts, links, alias, profileNFT, address } = props;
+
   return (
     <>
       <Head>
         <title>LinkChain</title>
+        <meta name="twitter:card" content="summary" />
+        <meta property="og:url" content={`https://www.linkchain.me/${alias}`} />
+        <meta property="og:title" content={`${alias}'s linkchain'`} />
+        <meta
+          property="og:description"
+          content={`See ${alias}'s verified NFTs and social links on Linkchain!'`}
+        />
+        <meta property="og:image" content={profileNFT.imageUrl} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header>
