@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Image from 'next/image';
 
 type Props = {
   error?: string;
@@ -16,12 +17,28 @@ export const SocialInput = (props: Props) => {
   return (
     <div
       style={{
-        backgroundColor: 'white',
+        backgroundColor: 'gray',
         margin: 10,
         overflowY: 'scroll',
+        WebkitTextSizeAdjust: '100%',
+        WebkitTapHighlightColor: 'transparent',
+        lineHeight: '1.5',
+        textAlign: 'left',
+        color: 'white',
+        fontFamily: 'Inter, sans-serif',
+        fontSize: '16px',
+        letterSpacing: 'normal',
+        pointerEvents: 'all',
+        WebkitFontSmoothing: 'antialiased',
+        backfaceVisibility: 'hidden',
+        flex: '1 1 0%',
+        padding: '16px',
+        height: '100%',
+        position: 'relative',
+        boxSizing: 'inherit',
       }}
     >
-      <div
+      <form
         style={{
           WebkitTextSizeAdjust: '100%',
           WebkitTapHighlightColor: 'transparent',
@@ -33,15 +50,14 @@ export const SocialInput = (props: Props) => {
           letterSpacing: 'normal',
           pointerEvents: 'all',
           WebkitFontSmoothing: 'antialiased',
-          backfaceVisibility: 'hidden',
-          flex: '1 1 0%',
-          padding: '16px',
+          flexDirection: 'row',
+          width: '100%',
           height: '100%',
-          position: 'relative',
+          display: 'flex',
           boxSizing: 'inherit',
         }}
       >
-        <form
+        <div
           style={{
             WebkitTextSizeAdjust: '100%',
             WebkitTapHighlightColor: 'transparent',
@@ -53,10 +69,9 @@ export const SocialInput = (props: Props) => {
             letterSpacing: 'normal',
             pointerEvents: 'all',
             WebkitFontSmoothing: 'antialiased',
-            flexDirection: 'row',
+            flex: '1 1 0%',
             width: '100%',
-            height: '100%',
-            display: 'flex',
+            paddingRight: '12px',
             boxSizing: 'inherit',
           }}
         >
@@ -72,9 +87,6 @@ export const SocialInput = (props: Props) => {
               letterSpacing: 'normal',
               pointerEvents: 'all',
               WebkitFontSmoothing: 'antialiased',
-              flex: '1 1 0%',
-              width: '100%',
-              paddingRight: '12px',
               boxSizing: 'inherit',
             }}
           >
@@ -90,6 +102,13 @@ export const SocialInput = (props: Props) => {
                 letterSpacing: 'normal',
                 pointerEvents: 'all',
                 WebkitFontSmoothing: 'antialiased',
+                display: 'grid',
+                marginBottom: '4px',
+                width: '100%',
+                gridTemplateColumns: 'minmax(0px, 90%)',
+                justifyContent: 'left',
+                WebkitBoxAlign: 'baseline',
+                alignItems: 'baseline',
                 boxSizing: 'inherit',
               }}
             >
@@ -103,117 +122,95 @@ export const SocialInput = (props: Props) => {
                   fontFamily: 'Inter, sans-serif',
                   fontSize: '16px',
                   letterSpacing: 'normal',
-                  pointerEvents: 'all',
                   WebkitFontSmoothing: 'antialiased',
-                  display: 'grid',
-                  marginBottom: '4px',
-                  width: '100%',
-                  gridTemplateColumns: 'minmax(0px, 90%)',
-                  justifyContent: 'left',
-                  WebkitBoxAlign: 'baseline',
-                  alignItems: 'baseline',
+                  gridArea: '1 / 1 / auto / auto',
                   boxSizing: 'inherit',
                 }}
               >
-                <div
+                <input
                   style={{
                     WebkitTextSizeAdjust: '100%',
                     WebkitTapHighlightColor: 'transparent',
-                    lineHeight: '1.5',
-                    textAlign: 'left',
-                    color: '#0a0b0d',
-                    fontFamily: 'Inter, sans-serif',
-                    fontSize: '16px',
-                    letterSpacing: 'normal',
                     WebkitFontSmoothing: 'antialiased',
-                    gridArea: '1 / 1 / auto / auto',
+                    overflow: 'visible',
+                    backgroundColor: 'transparent',
+                    backgroundImage: 'none',
+                    borderRadius: '0px',
+                    fontStyle: 'inherit',
+                    fontVariant: 'inherit',
+                    fontStretch: 'inherit',
+                    lineHeight: 'inherit',
+                    fontFamily: 'inherit',
+                    appearance: 'none',
+                    border: '2px',
+                    borderColor: 'black',
+                    color: 'rgb(61, 68, 75)',
+                    width: '100%',
+                    height: '20px',
+                    margin: '0px',
+                    padding: '0px',
+                    fontSize: '14px',
                     boxSizing: 'inherit',
                   }}
-                >
-                  <input
-                    style={{
-                      WebkitTextSizeAdjust: '100%',
-                      WebkitTapHighlightColor: 'transparent',
-                      WebkitFontSmoothing: 'antialiased',
-                      overflow: 'visible',
-                      backgroundColor: 'transparent',
-                      backgroundImage: 'none',
-                      borderRadius: '0px',
-                      fontStyle: 'inherit',
-                      fontVariant: 'inherit',
-                      fontStretch: 'inherit',
-                      lineHeight: 'inherit',
-                      fontFamily: 'inherit',
-                      appearance: 'none',
-                      border: '2px',
-                      borderColor: 'black',
-                      color: 'rgb(61, 68, 75)',
-                      width: '100%',
-                      height: '20px',
-                      margin: '0px',
-                      padding: '0px',
-                      fontSize: '14px',
-                      boxSizing: 'inherit',
-                    }}
-                    type="text"
-                    autoComplete="false"
-                    name="hidden"
-                    id="twitter"
-                    placeholder={'Your title'}
-                    value={title}
-                    onChange={(evt) => {
-                      setTitle(evt.target.value);
-                      onEdit(evt.target.value, link);
-                    }}
-                  />
-                  <input
-                    style={{
-                      WebkitTextSizeAdjust: '100%',
-                      WebkitTapHighlightColor: 'transparent',
-                      WebkitFontSmoothing: 'antialiased',
-                      overflow: 'visible',
-                      backgroundColor: 'transparent',
-                      backgroundImage: 'none',
-                      borderRadius: '0px',
-                      fontStyle: 'inherit',
-                      fontVariant: 'inherit',
-                      fontStretch: 'inherit',
-                      lineHeight: 'inherit',
-                      fontFamily: 'inherit',
-                      appearance: 'none',
-                      border: '0px',
-                      color: 'rgb(61, 68, 75)',
-                      width: '100%',
-                      height: '20px',
-                      margin: '0px',
-                      padding: '0px',
-                      fontSize: '14px',
-                      boxSizing: 'inherit',
-                    }}
-                    type="text"
-                    autoComplete="false"
-                    name="hidden"
-                    id="twitter"
-                    placeholder="Your link goes here"
-                    value={link}
-                    onChange={(evt) => {
-                      setLink(evt.target.value);
-                      onEdit(title, evt.target.value);
-                    }}
-                  />
-                </div>
+                  type="text"
+                  autoComplete="false"
+                  name="hidden"
+                  id="twitter"
+                  placeholder={'Your title'}
+                  value={title}
+                  onChange={(evt) => {
+                    setTitle(evt.target.value);
+                    onEdit(evt.target.value, link);
+                  }}
+                />
+                <input
+                  style={{
+                    WebkitTextSizeAdjust: '100%',
+                    WebkitTapHighlightColor: 'transparent',
+                    WebkitFontSmoothing: 'antialiased',
+                    overflow: 'visible',
+                    backgroundColor: 'transparent',
+                    backgroundImage: 'none',
+                    borderRadius: '0px',
+                    fontStyle: 'inherit',
+                    fontVariant: 'inherit',
+                    fontStretch: 'inherit',
+                    lineHeight: 'inherit',
+                    fontFamily: 'inherit',
+                    appearance: 'none',
+                    border: '0px',
+                    color: 'rgb(61, 68, 75)',
+                    width: '100%',
+                    height: '20px',
+                    margin: '0px',
+                    padding: '0px',
+                    fontSize: '14px',
+                    boxSizing: 'inherit',
+                  }}
+                  type="text"
+                  autoComplete="false"
+                  name="hidden"
+                  id="twitter"
+                  placeholder="Your link goes here"
+                  value={link}
+                  onChange={(evt) => {
+                    setLink(evt.target.value);
+                    onEdit(title, evt.target.value);
+                  }}
+                />
               </div>
             </div>
           </div>
-        </form>
-        <div
-          style={{
-            cursor: 'pointer',
-          }}
-          onClick={onDelete}
-        >
-          Delete
         </div>
+      </form>
+      <div style={{ cursor: 'pointer' }}>
+        <Image
+          width={25}
+          height={25}
+          onClick={onDelete}
+          src="/trashcan.png"
+          alt="Delete"
+        />
       </div>
       {error && (
         <div

@@ -103,50 +103,69 @@ export const LinkSocials = (
 
   return (
     <div>
-      {!existingLinks && (
-        <h1
+      <div
+        style={{
+          display: 'flex',
+          justifyContent: 'center',
+        }}
+      >
+        {!existingLinks && (
+          <h1
+            style={{
+              top: 0,
+            }}
+          >
+            Create your linkchain!
+          </h1>
+        )}
+
+        <div
+          onClick={addElement}
           style={{
-            top: 0,
+            marginBottom: 10,
+            cursor: 'pointer',
+            backgroundColor: 'black',
+            color: 'white',
+            width: 200,
+            height: 20,
           }}
         >
-          Create your linkchain!
-        </h1>
-      )}
-      <div
-        onClick={addElement}
-        style={{
-          marginBottom: 10,
-          cursor: 'pointer',
-          backgroundColor: 'white',
-          width: 200,
-          height: 20,
-        }}
-      >
-        Add new link
+          Add new link
+        </div>
+        <div
+          onClick={handleSubmit}
+          style={{
+            marginBottom: 10,
+            cursor: 'pointer',
+            marginLeft: 20,
+            backgroundColor: 'black',
+            color: 'white',
+            width: 200,
+            height: 20,
+          }}
+        >
+          Save and continue
+        </div>
       </div>
       <div
-        onClick={handleSubmit}
         style={{
-          marginBottom: 10,
-          cursor: 'pointer',
-          backgroundColor: 'white',
-          width: 200,
-          height: 20,
+          alignItems: 'center',
+          display: 'flex',
+          flexDirection: 'column',
         }}
       >
-        Save and continue
+        {socialAccounts.map((link) => (
+          <SocialInput
+            key={link.id}
+            title={link.title}
+            link={link.link}
+            onEdit={(title: string, _link: string) =>
+              updateElement(link.id, title, _link)
+            }
+            onDelete={() => removeElement(link.id)}
+          />
+        ))}
       </div>
-      {socialAccounts.map((link) => (
-        <SocialInput
-          key={link.id}
-          title={link.title}
-          link={link.link}
-          onEdit={(title: string, _link: string) =>
-            updateElement(link.id, title, _link)
-          }
-          onDelete={() => removeElement(link.id)}
-        />
-      ))}
     </div>
   );
 };
