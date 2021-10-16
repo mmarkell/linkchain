@@ -135,29 +135,28 @@ function Home() {
         >
           {unsure ? '' : needsOnboarding ? 'sign up' : 'edit your profile'}
         </div>
-        {needsOnboarding ||
-          (unsure && (
-            <div
-              style={{
-                backgroundColor: '#1F4893',
-                border: 'none',
-                fontFamily: 'Space Grotesk',
-                fontSize: '1.4rem',
-                padding: '60px 20px',
-                transition: 'all .3s ease-in-out',
-                borderRadius: 10,
-                color: 'white',
-                width: '30%',
-                height: '30%',
-                cursor: 'pointer',
-                margin: 'auto',
-                marginTop: '2rem',
-              }}
-              onClick={goToDemo}
-            >
-              See a demo!
-            </div>
-          ))}
+        {(needsOnboarding || unsure) && (
+          <div
+            style={{
+              backgroundColor: '#1F4893',
+              border: 'none',
+              fontFamily: 'Space Grotesk',
+              fontSize: '1.4rem',
+              padding: '60px 20px',
+              transition: 'all .3s ease-in-out',
+              borderRadius: 10,
+              color: 'white',
+              width: '30%',
+              height: '30%',
+              cursor: 'pointer',
+              margin: 'auto',
+              marginTop: '2rem',
+            }}
+            onClick={goToDemo}
+          >
+            See a demo!
+          </div>
+        )}
       </main>
 
       <style jsx>{`
