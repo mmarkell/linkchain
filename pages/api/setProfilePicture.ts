@@ -52,7 +52,7 @@ export default async function handler(
       address: nftArgs.address,
       imageUrl: nftArgs.imageUrl,
       type: nftArgs.type,
-      User: {
+      user: {
         connect: {
           id: existingUser.id,
         },

@@ -1,3 +1,4 @@
+import { Link, LinkType, Prisma } from '.prisma/client';
 import { NextApiRequest, NextApiResponse } from 'next';
 import { prisma } from '../../db';
 
@@ -5,15 +6,18 @@ type ReturnType = {
   success: boolean;
 };
 
+type SocialAccount = { title: string; link: string; id: string };
+type SocialAccounts = SocialAccount[];
+
 export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse<ReturnType>,
 ) {
   const body = JSON.parse(req.body) as {
-    twitterHandle: string;
+    socialAccounts: SocialAccounts;
     address: string;
   };
-  const { twitterHandle, address } = body;
+  const { socialAccounts, address } = body;
   const existingUser = await prisma.user.findUnique({
     where: {
       address: address,
@@ -26,19 +30,26 @@ export default async function handler(
     });
   }
 
-  const link = await prisma.link.create({
-    data: {
-      User: {
-        connect: {
-          id: existingUser.id,
-        },
-      },
-      type: 'TWITTER',
-      url: twitterHandle,
+  const result = await prisma.link.createMany({
+    data: socialAccounts.map((elem: SocialAccount) => {
+      return {
+        type: 'OTHER' as LinkType,
+        url: elem.link,
+        title: elem.title,
+        userId: existingUser.id, // need User?
+      };
+    }),
+    skipDuplicates: true,
+  });
+
+  await prisma.user.update({
+    where: {
+      address,
     },
+    data: {},
   });
 
   res.status(200).send({
-    success: Boolean(link),
+    success: Boolean(result.count > 0),
   });
 }

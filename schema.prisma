@@ -8,14 +8,14 @@ datasource db {
 }
 
 model User {
-  id           Int      @id @default(autoincrement())
-  role         Role     @default(USER)
-  createdAt    DateTime @default(now())
-  address      String?  @unique
-  alias        String   @unique
-  profileNFT   Nft?     @relation("profileNFT", fields: [nftId], references: [id])
-  links        Link[]   @relation("links")
-  nftId        Int?
+  id         Int      @id @default(autoincrement())
+  role       Role     @default(USER)
+  createdAt  DateTime @default(now())
+  address    String?  @unique
+  alias      String   @unique
+  profileNFT Nft?     @relation("profileNFT", fields: [nftId], references: [id])
+  links      Link[]
+  nftId      Int?
 }
 
 model Nft {
@@ -23,15 +23,16 @@ model Nft {
   address  String
   imageUrl String?
   type     NFTType
-  User     User[]  @relation("profileNFT")
+  user     User[]  @relation("profileNFT")
 }
 
 model Link {
   id     Int      @id @default(autoincrement())
   type   LinkType
   url    String
-  User   User?    @relation("links", fields: [userId], references: [id])
-  userId Int?
+  title  String
+  user   User     @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 enum Role {

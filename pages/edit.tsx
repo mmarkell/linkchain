@@ -1,18 +1,11 @@
-import { Web3Provider } from '@ethersproject/providers';
-import { useWeb3React } from '@web3-react/core';
-import { GetServerSideProps } from 'next';
 import Head from 'next/head';
-import { useRouter } from 'next/router';
-import React, { useEffect } from 'react';
+import React from 'react';
 import Account from '../components/Account';
 import Logo from '../components/Logo';
-import useAuth from '../hooks/useAuth';
 import useEagerConnect from '../hooks/useEagerConnect';
 
 const Edit = () => {
   const triedToEagerConnect = useEagerConnect();
-  const { active, account } = useWeb3React<Web3Provider>();
-  const { user, reloadUser } = useAuth();
 
   return (
     <div>

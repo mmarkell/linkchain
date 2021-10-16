@@ -36,7 +36,6 @@ export const LinkItem = (props: Props) => {
       <div
         style={{
           overflow: 'hidden',
-          marginBottom: 16,
           transition:
             'box-shadow 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, border-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, transform 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s, background-color 0.25s cubic-bezier(0.08, 0.59, 0.29, 0.99) 0s',
           border: '2px solid rgb(255, 255, 255)',
@@ -46,6 +45,7 @@ export const LinkItem = (props: Props) => {
           height: 50,
           width: '30%',
           margin: 'auto',
+          marginBottom: 10,
         }}
       >
         <div
@@ -72,7 +72,7 @@ export const LinkItem = (props: Props) => {
             width: '100%',
           }}
         >
-          {item.type}{' '}
+          {item.title}
         </span>
       </div>
     </a>
