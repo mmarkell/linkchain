@@ -26,7 +26,7 @@ export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
       .then(({ isUsernameValid }: { isUsernameValid: boolean }) => {
         if (!isUsernameValid) {
           setError('Sorry, that username is taken');
-        } else if (username?.length >= 1 && username.length <= 3) {
+        } else if (username?.length >= 0 && username.length <= 3) {
           setError('Username must be more than 3 letters');
         } else {
           fetch('api/createAccount', {
@@ -46,50 +46,42 @@ export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
       });
   }, [setLoading, username, account, onComplete]);
 
-  const handleKeydown = useCallback(
-    (e: KeyboardEvent) => {
-      if (e.key === 'Enter') {
-        handleSubmit();
-      }
-    },
-    [handleSubmit],
-  );
-
-  useEffect(() => {
-    window.addEventListener('keydown', handleKeydown);
-    return () => {
-      window.removeEventListener('keydown', handleKeydown);
-    };
-  }, [handleKeydown]);
-
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        fontFamily: 'Space Grotesk',
+        flexGrow: 1,
+      }}
+    >
       <h2> Choose your username </h2>
       <div
         style={{
           display: 'flex',
           WebkitBoxAlign: 'center',
+          fontFamily: 'Space Grotesk',
           alignItems: 'center',
-          boxSizing: 'inherit',
-          paddingRight: 4,
         }}
       >
         <div
           style={{
             boxSizing: 'inherit',
+            flexGrow: 1,
+            fontFamily: 'Space Grotesk',
             display: 'flex',
             width: 16,
             top: 16,
-            marginRight: 4,
+            marginRight: 2,
           }}
         >
           <p
             style={{
               lineHeight: 1.5,
-              padding: 0,
               color: 'rgb(10, 11, 13)',
               fontWeight: 700,
               fontSize: 14,
+              fontFamily: 'Space Grotesk',
               pointerEvents: 'none',
             }}
           >
@@ -113,6 +105,7 @@ export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
             boxSizing: 'inherit',
             backgroundColor: 'transparent',
             backgroundImage: 'none',
+            fontFamily: 'Space Grotesk',
             border: 'none',
             padding: '0px 12px 0px 2px',
             font: 'inherit',
@@ -120,20 +113,33 @@ export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
             borderRadius: 8,
             opacity: 1,
             color: 'rgb(10, 11, 13)',
-            width: '100%',
-            height: 44,
+            height: 50,
           }}
         />
-        {error && (
-          <div
-            style={{
-              color: 'red',
-            }}
-          >
-            {error}
-          </div>
-        )}
       </div>
+      {error && (
+        <div
+          style={{
+            color: 'red',
+          }}
+        >
+          {error}
+        </div>
+      )}
+      <button
+        style={{
+          marginTop: '2rem',
+          backgroundColor: '#1F4893',
+          color: 'white',
+          fontFamily: 'Space Grotesk',
+          height: 200,
+          maxHeight: '20%',
+          fontSize: '2rem',
+        }}
+        onClick={handleSubmit}
+      >
+        Continue
+      </button>
     </div>
   );
 };

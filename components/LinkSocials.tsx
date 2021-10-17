@@ -32,7 +32,6 @@ export const LinkSocials = (
   const { account } = useWeb3React();
   const { onComplete, existingLinks } = props;
 
-  console.log(existingLinks);
   const [socialAccounts, setSocialAccounts] = useState<SocialAccounts>(
     existingLinks ?? [],
   );
@@ -67,7 +66,6 @@ export const LinkSocials = (
   const handleSubmit = useCallback(() => {
     if (!account) return;
     if (!validateSocialAccounts(socialAccounts)) {
-      console.log('not valid');
       setError('Enter a valid twitter profile link');
       return;
     }

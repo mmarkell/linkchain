@@ -79,10 +79,6 @@ export const OnboardingElements = (props: PropsType) => {
       >
         {item}
       </div>
-      <OnboardingControls
-        progressIndex={progressIndex}
-        numElements={items.length}
-      />
     </div>
   );
 };
