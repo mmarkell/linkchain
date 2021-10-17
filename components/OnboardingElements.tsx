@@ -6,7 +6,6 @@ import React, {
   useState,
 } from 'react';
 import useAuth from '../hooks/useAuth';
-import { OnboardingControls } from './OnboardingControls';
 
 type PropsType = PropsWithChildren<{}>;
 export const OnboardingElements = (props: PropsType) => {
