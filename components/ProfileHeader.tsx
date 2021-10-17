@@ -30,8 +30,8 @@ export const ProfileHeader = (props: Props) => {
       >
         {profileNFT && (
           <Image
-            width="100%"
-            height="100%"
+            width="200%"
+            height="200%"
             alt="Profile Picture"
             src={profileNFT.imageUrl}
           />
