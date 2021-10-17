@@ -45,15 +45,19 @@ const Edit = () => {
           />
         )}
         <br />
-        <br />
+        <hr />
+
         {user && user.links && (
-          <LinkSocials
-            existingLinks={user.links.map((_link) => ({
-              link: _link.url,
-              title: _link.title,
-              id: crypto.randomBytes(20).toString('hex'),
-            }))}
-          />
+          <>
+            <h1> Update your links </h1>
+            <LinkSocials
+              existingLinks={user.links.map((_link) => ({
+                link: _link.url,
+                title: _link.title,
+                id: crypto.randomBytes(20).toString('hex'),
+              }))}
+            />
+          </>
         )}
       </main>
 

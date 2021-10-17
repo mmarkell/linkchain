@@ -89,6 +89,7 @@ const NFTCollection = (props: Props) => {
             maxWidth: '80%',
             margin: 'auto',
             display: 'flex',
+            flexDirection: 'column',
           }}
         >
           <h1>Which NFT would you like to use for a profile picture?</h1>
