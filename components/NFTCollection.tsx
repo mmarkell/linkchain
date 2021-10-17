@@ -74,16 +74,25 @@ const NFTCollection = (props: Props) => {
     }, {});
   }, [nfts]);
 
+  let style = {};
+  if (isOnboarding) {
+    style = { maxHeight: '100%' };
+  } else {
+    style = { overflowY: 'auto', textAlign: 'center' };
+  }
+
   return (
-    <div
-      style={{
-        overflowY: 'auto',
-        textAlign: 'center',
-        color: 'black',
-      }}
-    >
+    <div style={style}>
       {isOnboarding && nfts?.length > 0 ? (
-        <h1>Which NFT would you like to use for a profile picture?</h1>
+        <div
+          style={{
+            maxWidth: '80%',
+            margin: 'auto',
+            display: 'flex',
+          }}
+        >
+          <h1>Which NFT would you like to use for a profile picture?</h1>
+        </div>
       ) : isOnboarding ? (
         <div
           style={{
