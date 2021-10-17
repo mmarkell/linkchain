@@ -21,10 +21,10 @@ const validateSocialAccounts = (socialAccounts: SocialAccounts) => {
   return !Object.keys(socialAccounts) // returns true if an account is not a valid URL
     .map((key) => socialAccounts[key])
     .filter((elem) => elem)
-    .some((elem: SocialAccount) => {
-      return !isUrl(elem.link);
-    });
+    .some((elem: SocialAccount) => hasError(elem));
 };
+
+const hasError = (link: SocialAccount) => !isUrl(link.link);
 
 export const LinkSocials = (
   props: OnboardingPropsType & { existingLinks?: SocialAccounts },
@@ -66,7 +66,7 @@ export const LinkSocials = (
   const handleSubmit = useCallback(() => {
     if (!account) return;
     if (!validateSocialAccounts(socialAccounts)) {
-      setError('Enter a valid twitter profile link');
+      setError('Please double check your links!');
       return;
     }
 
@@ -100,49 +100,57 @@ export const LinkSocials = (
   }, [handleKeydown]);
 
   return (
-    <div>
+    <div
+      style={{
+        display: 'flex',
+        flexDirection: 'column',
+        minHeight: '90vh',
+        fontFamily: 'Space Grotesk',
+        marginTop: '10%',
+      }}
+    >
       <div
         style={{
-          display: 'flex',
-          justifyContent: 'center',
+          marginLeft: 'auto',
+          marginRight: 'auto',
         }}
       >
-        {!existingLinks && (
-          <h1
-            style={{
-              top: 0,
-            }}
-          >
-            Create your linkchain!
-          </h1>
-        )}
+        {!existingLinks && <h1>Create your linkchain!</h1>}
 
         <div
-          onClick={addElement}
           style={{
-            marginBottom: 10,
-            cursor: 'pointer',
-            backgroundColor: 'black',
-            color: 'white',
-            width: 200,
-            height: 20,
+            display: 'flex',
           }}
         >
-          Add new link
-        </div>
-        <div
-          onClick={handleSubmit}
-          style={{
-            marginBottom: 10,
-            cursor: 'pointer',
-            marginLeft: 20,
-            backgroundColor: 'black',
-            color: 'white',
-            width: 200,
-            height: 20,
-          }}
-        >
-          Save and continue
+          <div
+            onClick={addElement}
+            style={{
+              marginBottom: 10,
+              cursor: 'pointer',
+              backgroundColor: 'black',
+              color: 'white',
+              width: 150,
+              height: '3rem',
+              lineHeight: '3rem',
+            }}
+          >
+            Add new link
+          </div>
+          <div
+            onClick={handleSubmit}
+            style={{
+              marginBottom: 10,
+              cursor: 'pointer',
+              marginLeft: 20,
+              backgroundColor: '#1F4893',
+              color: 'white',
+              width: 150,
+              height: '3rem',
+              lineHeight: '3rem',
+            }}
+          >
+            Finish
+          </div>
         </div>
       </div>
       <div
@@ -152,6 +160,11 @@ export const LinkSocials = (
           flexDirection: 'column',
         }}
       >
+        {error && (
+          <div style={{ color: 'red', fontFamily: 'Space Grotesk' }}>
+            {error}
+          </div>
+        )}
         {socialAccounts.map((link) => (
           <SocialInput
             key={link.id}
@@ -161,6 +174,7 @@ export const LinkSocials = (
               updateElement(link.id, title, _link)
             }
             onDelete={() => removeElement(link.id)}
+            error={hasError(link) ? 'Not a valid URL' : ''}
           />
         ))}
       </div>

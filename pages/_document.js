@@ -31,7 +31,7 @@ class MyDocument extends Document {
         </Head>
         <body
           style={{
-            backgroundColor: '#white',
+            backgroundColor: 'white',
           }}
         >
           <Main />

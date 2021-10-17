@@ -32,7 +32,7 @@ const UserPage = (props: Props) => {
           property="og:description"
           content={`See ${alias}'s verified NFTs and social links on LinkChain!`}
         />
-        <meta property="og:image" content={profileNFT.imageUrl} />
+        <meta property="og:image" content={profileNFT?.imageUrl} />
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <header>
@@ -53,15 +53,17 @@ const UserPage = (props: Props) => {
       <br />
       <br />
       <br />
-      <h1
-        style={{
-          color: 'black',
-          textAlign: 'center',
-        }}
-      >
-        NFT Collection{' '}
-        <Image src="/verified.png" width={25} height={25} alt="verified" />
-      </h1>
+      {nfts.length > 0 && (
+        <h1
+          style={{
+            color: 'black',
+            textAlign: 'center',
+          }}
+        >
+          NFT Collection{' '}
+          <Image src="/verified.png" width={25} height={25} alt="verified" />
+        </h1>
+      )}
       <NFTCollection nfts={nfts} />
       <style jsx>{`
         nav {

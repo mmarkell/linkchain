@@ -28,12 +28,14 @@ export const ProfileHeader = (props: Props) => {
         }}
         rel="noreferrer"
       >
-        <Image
-          width="100%"
-          height="100%"
-          alt="Profile Picture"
-          src={profileNFT.imageUrl}
-        />
+        {profileNFT && (
+          <Image
+            width="100%"
+            height="100%"
+            alt="Profile Picture"
+            src={profileNFT.imageUrl}
+          />
+        )}
       </a>
       <a
         href={formatEtherscanLink('Account', [1, address])}

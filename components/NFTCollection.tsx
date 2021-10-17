@@ -30,6 +30,10 @@ const NFTCollection = (props: Props) => {
   const [chosenImage, setChosenImage] = useState<string>(selectedNFT?.imageUrl);
   const [loading, setLoading] = useLoading();
 
+  const handleSkip = useCallback(() => {
+    onSaveProfile();
+  }, [onSaveProfile]);
+
   const handleClick = useCallback(
     (nft: ReturnItem) => {
       if (isOnboarding) {
@@ -74,7 +78,6 @@ const NFTCollection = (props: Props) => {
     <div
       style={{
         overflowY: 'auto',
-        backgroundColor: '#white',
         textAlign: 'center',
         color: 'black',
       }}
@@ -82,7 +85,38 @@ const NFTCollection = (props: Props) => {
       {isOnboarding && nfts?.length > 0 ? (
         <h1>Which NFT would you like to use for a profile picture?</h1>
       ) : isOnboarding ? (
-        <h1>Buy an NFT to get started :)</h1>
+        <div
+          style={{
+            maxWidth: '80%',
+            margin: 'auto',
+            display: 'flex',
+            flexDirection: 'column',
+            minHeight: '90vh',
+          }}
+        >
+          <h1>Connect to an account with NFTs!</h1>
+          <div
+            style={{
+              backgroundColor: '#1F4893',
+              border: 'none',
+              fontFamily: 'Space Grotesk',
+              fontSize: '1.4rem',
+              padding: '60px 20px',
+              transition: 'all .3s ease-in-out',
+              borderRadius: 10,
+              color: 'white',
+              maxWidth: '80%',
+              width: 500,
+              height: '30%',
+              cursor: 'pointer',
+              margin: 'auto',
+              marginTop: '2rem',
+            }}
+            onClick={handleSkip}
+          >
+            Skip to your LinkChain
+          </div>
+        </div>
       ) : null}
       <br />
       {Object.keys(groupedNFTs).map((key) => (

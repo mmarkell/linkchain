@@ -49,7 +49,6 @@ export const OnboardingElements = (props: PropsType) => {
         position: 'absolute',
         width: '100%',
         height: '100%',
-        left: 0,
         zIndex: 1,
         display: 'flex',
         flexDirection: 'column',
@@ -67,13 +66,10 @@ export const OnboardingElements = (props: PropsType) => {
           margin: 20,
           minHeight: 300,
           borderRadius: 25,
-          padding: '20px 20px 55px',
           display: 'flex',
           justifyContent: 'center',
           alignItems: 'center',
-          flexDirection: 'column',
-          position: 'relative',
-          backgroundColor: '#white',
+          backgroundColor: 'white',
         }}
       >
         {item}

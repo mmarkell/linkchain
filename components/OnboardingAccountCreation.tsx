@@ -49,13 +49,15 @@ export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
   return (
     <div
       style={{
+        flex: 1,
         display: 'flex',
         flexDirection: 'column',
         fontFamily: 'Space Grotesk',
-        flexGrow: 1,
+        minHeight: '90vh',
+        alignItems: 'center',
       }}
     >
-      <h2> Choose your username </h2>
+      <h2>Choose your username </h2>
       <div
         style={{
           display: 'flex',
@@ -66,10 +68,7 @@ export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
       >
         <div
           style={{
-            boxSizing: 'inherit',
-            flexGrow: 1,
             fontFamily: 'Space Grotesk',
-            display: 'flex',
             width: 16,
             top: 16,
             marginRight: 2,
@@ -130,10 +129,14 @@ export const OnboardingAccountCreation = (props: OnboardingPropsType) => {
         style={{
           marginTop: '2rem',
           backgroundColor: '#1F4893',
+          bottom: '20%',
+          position: 'absolute',
+          width: 250,
+          maxWidth: '60%',
           color: 'white',
           fontFamily: 'Space Grotesk',
-          height: 200,
-          maxHeight: '20%',
+          height: 100,
+          maxHeight: '10%',
           fontSize: '2rem',
         }}
         onClick={handleSubmit}
