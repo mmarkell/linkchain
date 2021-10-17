@@ -1,7 +1,7 @@
 import { Nft } from '.prisma/client';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { useLoading } from '../hooks/useLoading';
 import { ReturnItem } from '../pages/api/getTokensByAddress';
 import { SetProfilePictureCommand } from '../pages/api/setProfilePicture';
@@ -61,6 +61,15 @@ const NFTCollection = (props: Props) => {
     [address, isOnboarding, onSaveProfile, setLoading, userId],
   );
 
+  const groupedNFTs: { [key: string]: ReturnItem[] } = useMemo(() => {
+    return nfts.reduce((prev, curr) => {
+      const group = curr.tokenName;
+      if (!prev[group]) prev[group] = [];
+      prev[group].push(curr);
+      return prev;
+    }, {});
+  }, [nfts]);
+
   return (
     <div
       style={{
@@ -75,43 +84,53 @@ const NFTCollection = (props: Props) => {
       ) : isOnboarding ? (
         <h1>Buy an NFT to get started :)</h1>
       ) : null}
-      {nfts.map((item, i) => (
-        <div
-          key={`${item.tokenName}-${i}`}
-          className={'clickable card'}
-          onClick={() => handleClick(item)}
-        >
-          <Image
-            loading="lazy"
-            alt={item.tokenName}
-            src={item.imageUrl}
-            width={200}
-            height={200}
-            placeholder="blur"
-            blurDataURL="url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==)"
-          />
-          {chosenImage === item.imageUrl && (
-            <a
-              href={`https://twitter.com/intent/tweet?text=I just verified my ownership of ${encodeURIComponent(
-                item.tokenName,
-              )} ${encodeURIComponent(
-                item.tokenID,
-              )} on LinkChain!&url=https://linkchain.com/${alias}&via=linkchain`}
-              target="_blank"
-              rel="noreferrer"
-              className="social-card"
-              title="Share to Twitter"
+      <br />
+      {Object.keys(groupedNFTs).map((key) => (
+        <div key={key}>
+          <h2> {key} </h2>
+          {groupedNFTs[key].map((item, i) => (
+            <div
+              key={`${item.tokenName}-${i}`}
+              className={'clickable card'}
+              onClick={() => handleClick(item)}
             >
+              <div style={{ margin: 10 }}>
+                {item.tokenName} {item.tokenID ? `#${item.tokenID}` : ''}
+              </div>
               <Image
-                src="/verified.png"
-                width={25}
-                height={25}
-                alt="Verified Profile Picture"
+                loading="lazy"
+                alt={item.tokenName}
+                src={item.imageUrl}
+                width={200}
+                height={200}
+                placeholder="blur"
+                blurDataURL="url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAADUlEQVR42mP8z/C/HgAGgwJ/lK3Q6wAAAABJRU5ErkJggg==)"
               />
-            </a>
-          )}
+              {chosenImage === item.imageUrl && (
+                <a
+                  href={`https://twitter.com/intent/tweet?text=I just verified my ownership of ${encodeURIComponent(
+                    item.tokenName,
+                  )} ${encodeURIComponent(
+                    item.tokenID,
+                  )} on LinkChain!&url=https://linkchain.com/${alias}&via=linkchain`}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="social-card"
+                  title="Share to Twitter"
+                >
+                  <Image
+                    src="/verified.png"
+                    width={25}
+                    height={25}
+                    alt="Verified Profile Picture"
+                  />
+                </a>
+              )}
+            </div>
+          ))}
         </div>
       ))}
+
       <style jsx>{`
         .clickable {
           cursor: pointer;

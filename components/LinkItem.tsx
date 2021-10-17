@@ -39,7 +39,8 @@ export const LinkItem = (props: Props) => {
         marginBottom: 10,
         cursor: 'pointer',
         height: 50,
-        width: '30%',
+        maxWidth: '80%',
+        width: 800,
       }}
     >
       <div

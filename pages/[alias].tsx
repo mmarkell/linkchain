@@ -53,7 +53,7 @@ const UserPage = (props: Props) => {
       <br />
       <br />
       <br />
-      <h2
+      <h1
         style={{
           color: 'black',
           textAlign: 'center',
@@ -61,7 +61,7 @@ const UserPage = (props: Props) => {
       >
         NFT Collection{' '}
         <Image src="/verified.png" width={25} height={25} alt="verified" />
-      </h2>
+      </h1>
       <NFTCollection nfts={nfts} />
       <style jsx>{`
         nav {
